@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="team.chess.Mapper.ChessboardMapper">
-    <resultMap id="chessboardMapper" type="team.chess.POJO.Chessboard">
+    <resultMap id="chessboardMapper" type="team.chess.POJO.ChessboardPOJO">
         <result property="id" column="id"/>
         <result property="line1" column="line_1"/>
         <result property="line2" column="line_2"/>

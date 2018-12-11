@@ -1,6 +1,9 @@
 package team.chess.POJO;
 
-public class Chessboard {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ChessboardPOJO {
     private Integer id;
 
     private String line1;
@@ -159,5 +162,26 @@ public class Chessboard {
 
     public String getLine15() {
         return line15;
+    }
+
+    //返回行集合
+    public List<String> getLines() {
+        List<String> lines = new ArrayList<>();
+        lines.add(line1);
+        lines.add(line2);
+        lines.add(line3);
+        lines.add(line4);
+        lines.add(line5);
+        lines.add(line6);
+        lines.add(line7);
+        lines.add(line8);
+        lines.add(line9);
+        lines.add(line10);
+        lines.add(line11);
+        lines.add(line12);
+        lines.add(line13);
+        lines.add(line14);
+        lines.add(line15);
+        return lines;
     }
 }

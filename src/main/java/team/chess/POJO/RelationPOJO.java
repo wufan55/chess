@@ -1,6 +1,6 @@
 package team.chess.POJO;
 
-public class Relation {
+public class RelationPOJO {
     private Integer nodeBeginId;
 
     private Integer nodeEndId;

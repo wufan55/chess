@@ -1,6 +1,6 @@
 package team.chess.POJO;
 
-public class Step {
+public class StepPOJO {
     private Integer id;
 
     private Integer total;

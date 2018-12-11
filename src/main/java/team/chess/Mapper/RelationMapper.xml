@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="team.chess.Mapper.RelationMapper">
-    <resultMap id="relationMapper" type="team.chess.POJO.Relation">
+    <resultMap id="relationMapper" type="team.chess.POJO.RelationPOJO">
         <result property="nodeBeginId" column="node_begin_id"/>
         <result property="nodeEndId" column="node_end_id"/>
         <result property="stepId" column="step_id"/>

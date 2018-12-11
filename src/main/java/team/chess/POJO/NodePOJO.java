@@ -1,6 +1,6 @@
 package team.chess.POJO;
 
-public class Node {
+public class NodePOJO {
     private Integer id;
 
     private Integer chessboardId;
