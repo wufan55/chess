@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="team.chess.Mapper.StepMapper">
+    <resultMap id="stepMapper" type="team.chess.POJO.Step">
+        <result property="id" column="id"/>
+        <result property="total" column="total"/>
+        <result property="whiteWin" column="white_win"/>
+        <result property="blackWin" column="black_win"/>
+    </resultMap>
+
+    <select id="queryObject" resultMap="stepMapper">
+        select *
+        from chess_step
+        where `id` = #{value}
+    </select>
+</mapper>

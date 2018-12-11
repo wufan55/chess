@@ -8,7 +8,7 @@
             <transactionManager type="JDBC"></transactionManager>
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://localhost:3306/chess"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/chess?useSSL=true"/>
                 <property name="username" value="root"/>
                 <property name="password" value="1234"/>
             </dataSource>
@@ -17,5 +17,9 @@
 
     <mappers>
         <mapper resource="team/chess/Mapper/testMapper.xml"/>
+        <mapper resource="team/chess/Mapper/ChessboardMapper.xml"/>
+        <mapper resource="team/chess/Mapper/NodeMapper.xml"/>
+        <mapper resource="team/chess/Mapper/RelationMapper.xml"/>
+        <mapper resource="team/chess/Mapper/StepMapper.xml"/>
     </mappers>
 </configuration>

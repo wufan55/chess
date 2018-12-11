@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2b6c34d6-f514-4b01-a345-0c8509c6e80f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resource/mybatis-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/resource/mybatis-config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/team/chess/Action/testAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/team/chess/Action/testAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/team/chess/Mapper/RelationMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/team/chess/Mapper/RelationMapper.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,8 +17,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/Action/testAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="32" lean-forward="true" selection-start-line="6" selection-start-column="32" selection-end-line="6" selection-end-column="32" />
+            <state relative-caret-position="255">
+              <caret line="17" column="60" selection-start-line="17" selection-start-column="60" selection-end-line="17" selection-end-column="60" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/Action/JudgeMan.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="3" column="4" lean-forward="true" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -26,66 +38,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/Mapper/RelationMapper.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="47" lean-forward="true" selection-start-line="9" selection-start-column="47" selection-end-line="9" selection-end-column="47" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/Mapper/NodeMapper.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" column="52" lean-forward="true" selection-start-line="12" selection-start-column="52" selection-end-line="12" selection-end-column="52" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/Mapper/StepMapper.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="9" lean-forward="true" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/POJO/Node.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="15" column="5" lean-forward="true" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
-              <folding>
-                <element signature="e#216#217#0" expanded="true" />
-                <element signature="e#244#245#0" expanded="true" />
-                <element signature="e#274#275#0" expanded="true" />
-                <element signature="e#299#300#0" expanded="true" />
-                <element signature="e#356#357#0" expanded="true" />
-                <element signature="e#404#405#0" expanded="true" />
-                <element signature="e#444#445#0" expanded="true" />
-                <element signature="e#479#480#0" expanded="true" />
-                <element signature="e#522#523#0" expanded="true" />
-                <element signature="e#556#557#0" expanded="true" />
-                <element signature="e#589#590#0" expanded="true" />
-                <element signature="e#617#618#0" expanded="true" />
-                <element signature="e#652#653#0" expanded="true" />
-                <element signature="e#678#679#0" expanded="true" />
-                <element signature="e#707#708#0" expanded="true" />
-                <element signature="e#731#732#0" expanded="true" />
-                <element signature="e#766#767#0" expanded="true" />
-                <element signature="e#792#793#0" expanded="true" />
-                <element signature="e#821#822#0" expanded="true" />
-                <element signature="e#845#846#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/POJO/Step.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="26" lean-forward="true" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+            <state relative-caret-position="30">
+              <caret line="2" column="51" selection-start-line="2" selection-start-column="51" selection-end-line="2" selection-end-column="51" />
             </state>
           </provider>
         </entry>
@@ -93,17 +47,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/resource/mybatis-config.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="61" selection-start-line="22" selection-start-column="61" selection-end-line="22" selection-end-column="61" />
+            <state relative-caret-position="150">
+              <caret line="10" column="77" lean-forward="true" selection-start-line="10" selection-start-column="77" selection-end-line="10" selection-end-column="77" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/Mapper/ChessboardMapper.xml">
+        <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/Util/SqlUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="25" column="29" lean-forward="true" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
+            <state relative-caret-position="240">
+              <caret line="16" column="33" lean-forward="true" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -118,8 +75,8 @@
         <option value="Tag Library Descriptor" />
         <option value="mybatis-cofig" />
         <option value="XML Properties File" />
-        <option value="Class" />
         <option value="mybatis-mapper" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -134,7 +91,6 @@
         <option value="$PROJECT_DIR$/src/main/java/team/chess/POJO/testPOJO.java" />
         <option value="$PROJECT_DIR$/src/main/java/team/chess/Mapper/testMapper.java" />
         <option value="$PROJECT_DIR$/src/resource/team/chess/Mapper/testMapper.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/team/chess/Action/testAction.java" />
         <option value="$PROJECT_DIR$/src/main/java/team/chess/POJO/Chessboard.java" />
         <option value="$PROJECT_DIR$/src/main/java/team/chess/POJO/relation.java" />
         <option value="$PROJECT_DIR$/src/main/java/team/chess/POJO/Relation.java" />
@@ -142,8 +98,12 @@
         <option value="$PROJECT_DIR$/src/main/java/team/chess/POJO/Step.java" />
         <option value="$PROJECT_DIR$/src/main/java/team/chess/Mapper/ChessboardMapper.xml" />
         <option value="$PROJECT_DIR$/src/main/java/team/chess/Mapper/NodeMapper.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/team/chess/Mapper/RelationMapper.xml" />
         <option value="$PROJECT_DIR$/src/main/java/team/chess/Mapper/StepMapper.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/team/chess/Util/SqlSessionFactory.java" />
+        <option value="$PROJECT_DIR$/src/main/java/team/chess/Util/SqlUtil.java" />
+        <option value="$PROJECT_DIR$/src/main/java/team/chess/Action/testAction.java" />
+        <option value="$PROJECT_DIR$/src/main/java/team/chess/Mapper/RelationMapper.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/team/chess/Action/JudgeMan.java" />
         <option value="$PROJECT_DIR$/src/resource/mybatis-config.xml" />
       </list>
     </option>
@@ -160,7 +120,7 @@
     <navigator proportions="" version="1">
       <flattenPackages ProjectPane="false" />
       <showMembers ProjectPane="false" />
-      <showExcludedFiles Scope="true" ProjectPane="true" />
+      <showExcludedFiles Scope="false" ProjectPane="false" />
       <hideEmptyPackages ProjectPane="false" />
       <abbreviatePackageNames ProjectPane="false" />
       <autoscrollToSource ProjectPane="true" />
@@ -244,11 +204,17 @@
               <item name="chess" type="b2602c69:ProjectViewProjectNode" />
               <item name="chess" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="resource" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="team" type="462c0819:PsiDirectoryNode" />
+              <item name="chess" type="462c0819:PsiDirectoryNode" />
+              <item name="Util" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="chess" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="chess" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="resource" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -264,7 +230,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544530498906" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544534497270" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -327,18 +293,18 @@
       <updated>1544495570738</updated>
       <workItem from="1544495572076" duration="2213000" />
       <workItem from="1544501534058" duration="6667000" />
-      <workItem from="1544526147396" duration="2774000" />
+      <workItem from="1544526147396" duration="5011000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11654000" />
+    <option name="totallyTimeSpent" value="13891000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="807" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25679544" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25679544" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -347,7 +313,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32867134" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32867134" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -405,13 +371,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="24" selection-start-column="24" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/Action/testAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="32" lean-forward="true" selection-start-line="6" selection-start-column="32" selection-end-line="6" selection-end-column="32" />
         </state>
       </provider>
     </entry>
@@ -503,10 +462,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/Mapper/RelationMapper.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/Mapper/ChessboardMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="47" lean-forward="true" selection-start-line="9" selection-start-column="47" selection-end-line="9" selection-end-column="47" />
+        <state relative-caret-position="375">
+          <caret line="25" column="29" lean-forward="true" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/Util/SqlUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="33" lean-forward="true" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../../java-lib/mybatis-3.4.2/mybatis-3.4.2.jar!/org/apache/ibatis/exceptions/ExceptionFactory.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
         </state>
       </provider>
     </entry>
@@ -517,17 +493,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/Mapper/ChessboardMapper.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/Mapper/RelationMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="29" lean-forward="true" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
+        <state relative-caret-position="30">
+          <caret line="2" column="51" selection-start-line="2" selection-start-column="51" selection-end-line="2" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/Action/testAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="60" selection-start-line="17" selection-start-column="60" selection-end-line="17" selection-end-column="60" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/Action/JudgeMan.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="4" lean-forward="true" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/resource/mybatis-config.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="61" selection-start-line="22" selection-start-column="61" selection-end-line="22" selection-end-column="61" />
+        <state relative-caret-position="150">
+          <caret line="10" column="77" lean-forward="true" selection-start-line="10" selection-start-column="77" selection-end-line="10" selection-end-column="77" />
         </state>
       </provider>
     </entry>

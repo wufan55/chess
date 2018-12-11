@@ -15,12 +15,14 @@
         <result property="line10" column="line_10"/>
         <result property="line11" column="line_11"/>
         <result property="line12" column="line_12"/>
-        <result property="line13" column="line_10"/>
+        <result property="line13" column="line_13"/>
+        <result property="line14" column="line_14"/>
+        <result property="line15" column="line_15"/>
     </resultMap>
 
-    <select id="queryObject" resultMap="testMap">
+    <select id="queryObject" resultMap="chessboardMapper">
         select *
-        from chess_test
+        from chess_chessboard
         where `id` = #{value}
     </select>
 </mapper>
