@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="team.chess.Mapper.ChessboardMapper">
+    <resultMap id="chessboardMapper" type="team.chess.POJO.Chessboard">
+        <result property="id" column="id"/>
+        <result property="line1" column="line_1"/>
+        <result property="line2" column="line_2"/>
+        <result property="line3" column="line_3"/>
+        <result property="line4" column="line_4"/>
+        <result property="line5" column="line_5"/>
+        <result property="line6" column="line_6"/>
+        <result property="line7" column="line_7"/>
+        <result property="line8" column="line_8"/>
+        <result property="line9" column="line_9"/>
+        <result property="line10" column="line_10"/>
+        <result property="line11" column="line_11"/>
+        <result property="line12" column="line_12"/>
+        <result property="line13" column="line_10"/>
+    </resultMap>
+
+    <select id="queryObject" resultMap="testMap">
+        select *
+        from chess_test
+        where `id` = #{value}
+    </select>
+</mapper>

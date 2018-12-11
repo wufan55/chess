@@ -17,5 +17,9 @@
 
     <mappers>
         <mapper resource="team/chess/Mapper/testMapper.xml"/>
+        <mapper resource="team/chess/Mapper/ChessboardMapper.xml"/>
+        <mapper resource="team/chess/Mapper/NodeMapper.xml"/>
+        <mapper resource="team/chess/Mapper/RelationMapper.xml"/>
+        <mapper resource="team/chess/Mapper/StepMapper.xml"/>
     </mappers>
 </configuration>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper>
+    <resultMap id="relationMapper" type="team.chess.POJO.Relation">
+        <result property="nodeBeginId" column="node_begin_id"/>
+        <result property="nodeEndId" column="node_end_id"/>
+        <result property="stepId" column="step_id"/>
+    </resultMap>
+
+    <select id="queryList" resultMap="relationMapper">
+        select *
+        from chess_relation
+        where 1=1
+        <if test="nodeBeginId != null and nodeBeginId != ''">
+            `node_begin_id` = #{nodeBeginId},
+        </if>
+        <if test="nodeEndId != null and nodeEndId != ''">
+            `node_end_id` = #{nodeEndId},
+        </if>
+        <if test="stepId != null and stepId != ''">
+            `step_id` = #{stepId}
+        </if>
+    </select>
+</mapper>
