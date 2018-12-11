@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="team.chess.Mapper.testMapper">
+    <resultMap id="testMap" type="team.chess.POJO.testPOJO">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="comment" column="comment"/>
+    </resultMap>
+
+    <select id="queryObject" resultMap="testMap">
+        select *
+        from chess_test
+        where `id` = #{value}
+    </select>
+</mapper>
