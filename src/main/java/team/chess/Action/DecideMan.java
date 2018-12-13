@@ -9,10 +9,16 @@ import team.chess.POJO.StepPOJO;
 import team.chess.Util.SqlUtil;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DecideMan {
     private SqlUtil sqlUtil;
+
+    DecideMan(){
+        sqlUtil = new SqlUtil();
+    }
 
     //未完成
     public NodePOJO Decide(NodePOJO nodeBegin) throws IOException {
@@ -26,11 +32,57 @@ public class DecideMan {
         }
         //创建新分支
         else {
-            NodePOJO nodeEnd = new NodePOJO();
+            Integer x = nodeBegin.getX();
+            Integer y = nodeBegin.getY();
+            Integer value = nodeBegin.getValue();
+            ChessboardPOJO chessboardBegin = sqlSession.selectOne("team.chess.Mapper.ChessboardMapper.queryObject", nodeBegin.getChessboardId());
+            ChessboardPOJO chessboardPOJO = chessboardBegin;
+            List<String> lines = chessboardBegin.getLines();
 
+            if (x-2 >= 0 && y-2 >= 0 && lines.get(x-2).charAt(y-2) == '0'){
+                StringBuilder stringBuilder = new StringBuilder(lines.get(x-2));
+                stringBuilder.setCharAt(y-2, Character.forDigit(value, 10));
+                lines.set(x-2, stringBuilder.toString());
+                chessboardPOJO.setLines(lines);
+                List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
+                //判断网路中是否有该棋盘记录
+                //如果不存在就创建
+                if (chessboardPOJOList.size() == 0){
+                    //
+                }
+                Integer chessboardId = chessboardPOJOList.get(0).getId();
+                Map params = new HashMap();
+                params.put("chessboardId", chessboardId);
+                List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", params);
+                //判断网络中节点是否存在
+                //如果不存在，创建节点
+                if (nodePOJOList.size() == 0){
+                    //
+                }
+                NodePOJO nodeEnd = nodePOJOList.get(0);
+                Integer nodeEndId = nodeEnd.getId();
+                Integer nodeBeginId = nodeBegin.getId();
+                Map param = new HashMap();
+                param.put("nodeBeginId", nodeBeginId);
+                param.put("nodeEndId", nodeEndId);
+                List<RelationPOJO> relationPOJOList = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryList", param);
+                //判断网络中节点间的关系是否存在
+                //如果不存在，创建关系
+                //先创建step，再创建relation
+                if (relationPOJOList.size() == 0){
+                    StepPOJO stepPOJO = new StepPOJO();
+                    sqlSession.insert("team.chess.Mapper.StepMapper.save", stepPOJO);
+                    Integer stepId = stepPOJO.getId();
+                    RelationPOJO relationPOJO = new RelationPOJO();
+                    relationPOJO.setNodeBeginId(nodeBeginId);
+                    relationPOJO.setNodeEndId(nodeEndId);
+                    relationPOJO.setStepId(stepId);
+                    //
+                }
+            }
 
             sqlSession.close();
-            return nodeEnd;
+            return;
         }
     }
 

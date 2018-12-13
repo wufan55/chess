@@ -184,4 +184,22 @@ public class ChessboardPOJO {
         lines.add(line15);
         return lines;
     }
+
+    public void setLines(List<String> lines) {
+        line1 = lines.get(0);
+        line2 = lines.get(1);
+        line3 = lines.get(2);
+        line4 = lines.get(3);
+        line5 = lines.get(4);
+        line6 = lines.get(5);
+        line7 = lines.get(6);
+        line8 = lines.get(7);
+        line9 = lines.get(8);
+        line10 = lines.get(9);
+        line11 = lines.get(10);
+        line12 = lines.get(11);
+        line13 = lines.get(12);
+        line14 = lines.get(13);
+        line15 = lines.get(14);
+    }
 }

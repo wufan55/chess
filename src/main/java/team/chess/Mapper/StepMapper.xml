@@ -24,4 +24,18 @@
         </set>
         where id = #{id}
     </update>
+
+    <insert id="save" parameterType="team.chess.POJO.StepPOJO" useGeneratedKeys="true" keyProperty="id">
+        insert into chess_step(
+            `total`,
+            `white_win`,
+            `black_win`)
+        values (
+            #{total},
+            #{whiteWin},
+            #{blackWin})
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT @@IDENTITY AS id
+        </selectKey>
+    </insert>
 </mapper>

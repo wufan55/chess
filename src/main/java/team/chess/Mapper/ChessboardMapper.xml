@@ -25,4 +25,55 @@
         from chess_chessboard
         where `id` = #{value}
     </select>
+
+    <select id="queryList" resultMap="chessboardMapper">
+        select *
+        from chess_chessboard
+        where 1=1
+        <if test="line1 != null">
+            and `line_1` = #{line1}
+        </if>
+        <if test="line2 != null">
+            and `line_2` = #{line2}
+        </if>
+        <if test="line3 != null">
+            and `line_3` = #{line3}
+        </if>
+        <if test="line4 != null">
+            and `line_4` = #{line4}
+        </if>
+        <if test="line5 != null">
+            and `line_5` = #{line5}
+        </if>
+        <if test="line6 != null">
+            and `line_6` = #{line6}
+        </if>
+        <if test="line7 != null">
+            and `line_7` = #{line7}
+        </if>
+        <if test="line8 != null">
+            and `line_8` = #{line8}
+        </if>
+        <if test="line9 != null">
+            and `line_9` = #{line9}
+        </if>
+        <if test="line10 != null">
+            and `line_10` = #{line10}
+        </if>
+        <if test="line11 != null">
+            and `line_11` = #{line11}
+        </if>
+        <if test="line12 != null">
+            and `line_12` = #{line12}
+        </if>
+        <if test="line13 != null">
+            and `line_13` = #{line13}
+        </if>
+        <if test="line14 != null">
+            and `line_14` = #{line14}
+        </if>
+        <if test="line15 != null">
+            and `line_15` = #{line15}
+        </if>
+    </select>
 </mapper>

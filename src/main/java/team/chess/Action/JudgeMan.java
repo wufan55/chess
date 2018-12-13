@@ -10,7 +10,11 @@ import java.io.IOException;
 import java.util.List;
 
 public class JudgeMan {
-    SqlUtil sqlUtil = new SqlUtil();
+    private SqlUtil sqlUtil;
+
+    JudgeMan(){
+        sqlUtil = new SqlUtil();
+    }
 
     public boolean Judge(NodePOJO node) throws IOException {
         SqlSessionFactory sqlSessionFactory = sqlUtil.getSqlSessionFactory();
