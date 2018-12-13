@@ -14,6 +14,27 @@ import java.util.List;
 public class DecideMan {
     private SqlUtil sqlUtil;
 
+    //未完成
+    public NodePOJO Decide(NodePOJO nodeBegin) throws IOException {
+        SqlSessionFactory sqlSessionFactory = sqlUtil.getSqlSessionFactory();
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        Float filledLevel = filledLevel(nodeBegin);
+        if (filledLevel > 1/2) {
+            sqlSession.close();
+            return weightDecide(nodeBegin);
+        }
+        //创建新分支
+        else {
+            NodePOJO nodeEnd = new NodePOJO();
+
+
+            sqlSession.close();
+            return nodeEnd;
+        }
+    }
+
+    //单纯权重决策
     public NodePOJO weightDecide(NodePOJO nodeBegin) throws IOException {
         SqlSessionFactory sqlSessionFactory = sqlUtil.getSqlSessionFactory();
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -55,7 +76,7 @@ public class DecideMan {
     }
 
     //饱和度分析
-    public Float filledLevelDecide(NodePOJO nodeBegin) throws IOException {
+    public Float filledLevel(NodePOJO nodeBegin) throws IOException {
         SqlSessionFactory sqlSessionFactory = sqlUtil.getSqlSessionFactory();
         SqlSession sqlSession = sqlSessionFactory.openSession();
 

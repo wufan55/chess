@@ -15,4 +15,17 @@
         from chess_node
         where `id` = #{value}
     </select>
+
+    <insert id="save" parameterType="team.chess.POJO.NodePOJO" useGeneratedKeys="true" keyProperty="id">
+        insert into chess_node(
+            `chessboard_id`,
+            `x`,
+            `y`,
+            `value`)
+        values (
+            #{chessboardId},
+            #{x},
+            #{y},
+            #{value})
+    </insert>
 </mapper>
