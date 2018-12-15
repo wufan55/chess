@@ -7,7 +7,7 @@
         <result property="stepId" column="step_id"/>
     </resultMap>
 
-    <select id="queryList" resultMap="relationMapper">
+    <select id="queryList" resultMap="relationMapper" parameterType="team.chess.POJO.RelationPOJO">
         select *
         from chess_relation
         where 1=1
@@ -21,4 +21,30 @@
             and `step_id` = #{stepId}
         </if>
     </select>
+
+    <select id="queryListByMap" resultMap="relationMapper">
+        select *
+        from chess_relation
+        where 1=1
+        <if test="nodeBeginId != null">
+            and `node_begin_id` = #{nodeBeginId},
+        </if>
+        <if test="nodeEndId != null">
+            and `node_end_id` = #{nodeEndId},
+        </if>
+        <if test="stepId != null">
+            and `step_id` = #{stepId}
+        </if>
+    </select>
+
+    <insert id="save" parameterType="team.chess.POJO.RelationPOJO">
+        insert into chess_relation(
+            `node_begin_id`,
+            `node_end_id`,
+            `step_id`)
+        values (
+            #{nodeBeginId},
+            #{nodeEndId},
+            #{stepId})
+    </insert>
 </mapper>

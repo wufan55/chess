@@ -10,7 +10,11 @@ public class StepPOJO {
     private Integer blackWin;
 
     //防止计算胜率时分母为0的情况
-    public StepPOJO(){ total = 1; }
+    public StepPOJO() {
+        total = 1;
+        whiteWin = 0;
+        blackWin = 0;
+    }
 
     public void setId(Integer id) {
         this.id = id;
