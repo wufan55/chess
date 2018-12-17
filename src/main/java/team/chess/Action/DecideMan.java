@@ -16,11 +16,10 @@ import java.util.Map;
 public class DecideMan {
     private SqlUtil sqlUtil;
 
-    DecideMan(){
+    public DecideMan(){
         sqlUtil = new SqlUtil();
     }
 
-    //未完成
     public NodePOJO Decide(NodePOJO nodeBegin) throws IOException {
         SqlSessionFactory sqlSessionFactory = sqlUtil.getSqlSessionFactory();
         SqlSession sqlSession = sqlSessionFactory.openSession();

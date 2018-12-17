@@ -12,7 +12,7 @@ import java.util.List;
 public class JudgeMan {
     private SqlUtil sqlUtil;
 
-    JudgeMan(){
+    public JudgeMan(){
         sqlUtil = new SqlUtil();
     }
 
