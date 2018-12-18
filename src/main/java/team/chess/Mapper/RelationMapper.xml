@@ -12,13 +12,13 @@
         from chess_relation
         where 1=1
         <if test="nodeBeginId != null">
-            and `node_begin_id` = #{nodeBeginId},
+            and node_begin_id = #{nodeBeginId}
         </if>
         <if test="nodeEndId != null">
-            and `node_end_id` = #{nodeEndId},
+            and node_end_id = #{nodeEndId}
         </if>
         <if test="stepId != null">
-            and `step_id` = #{stepId}
+            and step_id = #{stepId}
         </if>
     </select>
 
@@ -27,10 +27,10 @@
         from chess_relation
         where 1=1
         <if test="nodeBeginId != null">
-            and `node_begin_id` = #{nodeBeginId},
+            and `node_begin_id` = #{nodeBeginId}
         </if>
         <if test="nodeEndId != null">
-            and `node_end_id` = #{nodeEndId},
+            and `node_end_id` = #{nodeEndId}
         </if>
         <if test="stepId != null">
             and `step_id` = #{stepId}

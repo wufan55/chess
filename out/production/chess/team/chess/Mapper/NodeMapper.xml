@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="team.chess.Mapper.NodeMapper">
-    <resultMap id="nodeMapper" type="team.chess.POJO.Node">
+    <resultMap id="nodeMapper" type="team.chess.POJO.NodePOJO">
         <result property="id" column="id"/>
         <result property="chessboardId" column="chessboard_id"/>
         <result property="x" column="x"/>
@@ -15,4 +15,38 @@
         from chess_node
         where `id` = #{value}
     </select>
+
+    <select id="queryList" resultMap="nodeMapper" parameterType="team.chess.POJO.NodePOJO">
+        select *
+        from chess_node
+        where 1=1
+        <if test="chessboardId != null">
+            AND `chessboard_id` = #{chessboardId}
+        </if>
+        <if test="x != null">
+            AND `x` = #{x}
+        </if>
+        <if test="y != null">
+            and `y` = #{y}
+        </if>
+        <if test="value != null">
+            and `value` = #{value}
+        </if>
+    </select>
+
+    <insert id="save" parameterType="team.chess.POJO.NodePOJO" useGeneratedKeys="true" keyProperty="id">
+        insert into chess_node(
+            `chessboard_id`,
+            `x`,
+            `y`,
+            `value`)
+        values (
+            #{chessboardId},
+            #{x},
+            #{y},
+            #{value})
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT @@IDENTITY AS id
+        </selectKey>
+    </insert>
 </mapper>
