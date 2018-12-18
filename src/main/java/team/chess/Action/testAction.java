@@ -2,6 +2,7 @@ package team.chess.Action;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import team.chess.POJO.NodePOJO;
 import team.chess.POJO.RelationPOJO;
 import team.chess.Util.SqlUtil;
 
@@ -17,11 +18,15 @@ public class testAction {
         //创建SqlSession
         SqlSession sqlSession = sqlSessionFactory.openSession();
         //获取对象
-        RelationPOJO relationPOJO = new RelationPOJO();
-        relationPOJO.setNodeBeginId(1);
-        List<RelationPOJO> testPojo = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryList", relationPOJO);
-        if (testPojo.size() != 0) relationPOJO = testPojo.get(0);
-        System.out.println(relationPOJO.getStepId());
+        NodePOJO nodePOJO = new NodePOJO();
+        nodePOJO.setChessboardId(1);
+        nodePOJO.setX(1);
+        nodePOJO.setY(1);
+        nodePOJO.setValue(1);
+        sqlSession.insert("team.chess.Mapper.NodeMapper.save", nodePOJO);
+        System.out.println(nodePOJO.getId());
+
+        sqlSession.commit();
         sqlSession.close();
     }
 }

@@ -26,6 +26,7 @@ public class DecideMan {
 
         Float filledLevel = filledLevel(nodeBegin);
         if (filledLevel > 1/2) {
+            sqlSession.commit();
             sqlSession.close();
             return weightDecide(nodeBegin);
         }
@@ -424,6 +425,7 @@ public class DecideMan {
                 }
             }
 
+            sqlSession.commit();
             sqlSession.close();
             return nodeEnd;
         }
@@ -466,6 +468,8 @@ public class DecideMan {
         }
         Integer nodeEndId = relationDecide.getNodeEndId();
         NodePOJO nodeEnd = sqlSession.selectOne("team.chess.Mapper.NodeMapper.queryObject", nodeEndId);
+
+        sqlSession.commit();
         sqlSession.close();
         return nodeEnd;
     }
@@ -502,6 +506,7 @@ public class DecideMan {
         if (total == 0) filledLevel = Float.valueOf(0);
         else  filledLevel = Float.valueOf(known / total);
 
+        sqlSession.commit();
         sqlSession.close();
         return filledLevel;
     }

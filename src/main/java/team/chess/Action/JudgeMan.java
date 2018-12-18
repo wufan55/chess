@@ -70,6 +70,8 @@ public class JudgeMan {
         }
         if (num == 5) result = true;
 
+        sqlSession.commit();
+        sqlSession.close();
         return result;
     }
 }

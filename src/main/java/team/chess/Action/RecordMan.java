@@ -63,7 +63,7 @@ public class RecordMan {
             //记录
             stepPOJOS.add(stepPOJO);
         }
-
+        sqlSession.commit();
         sqlSession.close();
     }
 
@@ -81,6 +81,7 @@ public class RecordMan {
 
             sqlSession.update("team.chess.Mapper.StepMapper.update", stepPOJO);
         }
+        sqlSession.commit();
         sqlSession.close();
     }
 }
