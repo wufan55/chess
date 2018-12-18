@@ -18,8 +18,8 @@
     <update id="update" parameterType="team.chess.POJO.StepPOJO">
         update chess_step
         <set>
-            <if test="total != null">`total` = #{total}</if>
-            <if test="whiteWin != null">`white_win` = #{whiteWin}</if>
+            <if test="total != null">`total` = #{total},</if>
+            <if test="whiteWin != null">`white_win` = #{whiteWin},</if>
             <if test="blackWin != null">`black_win` = #{blackWin}</if>
         </set>
         where id = #{id}

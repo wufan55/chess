@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import team.chess.POJO.NodePOJO;
 import team.chess.POJO.RelationPOJO;
+import team.chess.POJO.StepPOJO;
 import team.chess.Util.SqlUtil;
 
 import java.io.IOException;
@@ -18,14 +19,9 @@ public class testAction {
         //创建SqlSession
         SqlSession sqlSession = sqlSessionFactory.openSession();
         //获取对象
-        NodePOJO nodePOJO = new NodePOJO();
-        nodePOJO.setChessboardId(1);
-        nodePOJO.setX(1);
-        nodePOJO.setY(1);
-        nodePOJO.setValue(1);
-        sqlSession.insert("team.chess.Mapper.NodeMapper.save", nodePOJO);
-        System.out.println(nodePOJO.getId());
-
+        StepPOJO stepPOJO = sqlSession.selectOne("team.chess.Mapper.StepMapper.queryObject", 1);
+        stepPOJO.setTotal(2);
+        sqlSession.update("team.chess.Mapper.StepMapper.update", stepPOJO);
         sqlSession.commit();
         sqlSession.close();
     }
