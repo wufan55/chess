@@ -25,6 +25,8 @@ public class MainLoop {
         RecordMan recordMan = new RecordMan();
         JudgeMan judgeMan = new JudgeMan();
         NodePOJO rootNodePOJO = sqlSession.selectOne("team.chess.Mapper.NodeMapper.queryObject", 0);
+        sqlSession.commit();
+        sqlSession.close();
         boolean result;
 
         NodePOJO beginNode = rootNodePOJO;
@@ -35,8 +37,8 @@ public class MainLoop {
                 result = judgeMan.Judge(beginNode);
 
                 String strValue;
-                if (beginNode.getValue() == 1) strValue = "black";
-                else strValue = "white";
+                if (beginNode.getValue() == 1) strValue = "white";
+                else strValue = "black";
 
                 if (result == true) {
                     recordMan.UpdateRecord(beginNode.getValue());
@@ -57,15 +59,16 @@ public class MainLoop {
                 Integer huY = scanner.nextInt();
                 Integer huVal = beginNode.getValue();
 
-                ChessboardPOJO chessboardPOJO = sqlSession.selectOne("team.chess.Mapper.ChessboardMapper.queryObject", endNode.getChessboardId());
+                SqlSession sqlSession1 = sqlSessionFactory.openSession();
+                ChessboardPOJO chessboardPOJO = sqlSession1.selectOne("team.chess.Mapper.ChessboardMapper.queryObject", endNode.getChessboardId());
                 List<String> lines = chessboardPOJO.getLines();
                 StringBuilder stringBuilder = new StringBuilder(lines.get(huX-1));
                 stringBuilder.setCharAt(huY-1, Character.forDigit(huVal, 10));
                 lines.set(huX-1, stringBuilder.toString());
                 chessboardPOJO.setLines(lines);
 
-                List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
-                if (chessboardPOJOList.size() == 0) sqlSession.insert("team.chess.Mapper.ChessboardMapper.save", chessboardPOJO);
+                List<ChessboardPOJO> chessboardPOJOList = sqlSession1.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
+                if (chessboardPOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.ChessboardMapper.save", chessboardPOJO);
                 else chessboardPOJO = chessboardPOJOList.get(0);
                 Integer chessboardId = chessboardPOJO.getId();
 
@@ -74,17 +77,19 @@ public class MainLoop {
                 nodePOJO.setX(huX);
                 nodePOJO.setY(huY);
                 nodePOJO.setValue(huVal);
-                List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
-                if (nodePOJOList.size() == 0) sqlSession.insert("team.chess.Mapper.NodeMapper.save", nodePOJO);
+                List<NodePOJO> nodePOJOList = sqlSession1.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
+                if (nodePOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.NodeMapper.save", nodePOJO);
                 else nodePOJO = nodePOJOList.get(0);
 
                 //记录end to next
                 recordMan.Record(endNode, nodePOJO);
                 beginNode = nodePOJO;
+
+                sqlSession1.commit();
+                sqlSession1.close();
             }
             i++;
         }
-        sqlSession.close();
         scanner.close();
         return;
     }
