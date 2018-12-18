@@ -498,7 +498,9 @@ public class DecideMan {
         //获取known
         Integer known = 0;
         Integer nodeBeginId = nodeBegin.getId();
-        List<RelationPOJO> relationPOJOS = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryList", nodeBeginId);
+        Map param = new HashMap();
+        param.put("nodeBeginId", nodeBeginId);
+        List<RelationPOJO> relationPOJOS = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
         known = relationPOJOS.size();
 
         //饱和度

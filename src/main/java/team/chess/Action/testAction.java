@@ -19,9 +19,9 @@ public class testAction {
         //创建SqlSession
         SqlSession sqlSession = sqlSessionFactory.openSession();
         //获取对象
-        StepPOJO stepPOJO = sqlSession.selectOne("team.chess.Mapper.StepMapper.queryObject", 1);
-        stepPOJO.setTotal(2);
-        sqlSession.update("team.chess.Mapper.StepMapper.update", stepPOJO);
+        List<NodePOJO> nodePOJO = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", 0);
+        System.out.println(nodePOJO.get(0).getValue());
+
         sqlSession.commit();
         sqlSession.close();
     }
