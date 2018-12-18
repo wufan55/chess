@@ -69,19 +69,20 @@ public class RecordMan {
 
     public void UpdateRecord(Integer value) throws IOException {
         SqlSessionFactory sqlSessionFactory = sqlUtil.getSqlSessionFactory();
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
         for (StepPOJO stepPOJO : stepPOJOS){
+            SqlSession sqlSession = sqlSessionFactory.openSession();
             Integer total = stepPOJO.getTotal();
             Integer whiteWin = stepPOJO.getWhiteWin();
             Integer blackWin = stepPOJO.getBlackWin();
             stepPOJO.setTotal(total+1);
-            if (value == 1) stepPOJO.setTotal(blackWin+1);
-            if (value == 2) stepPOJO.setTotal(whiteWin+1);
+            if (value == 1) stepPOJO.setBlackWin(blackWin+1);
+            if (value == 2) stepPOJO.setWhiteWin(whiteWin+1);
 
             sqlSession.update("team.chess.Mapper.StepMapper.update", stepPOJO);
+            sqlSession.commit();
+            sqlSession.close();
         }
-        sqlSession.commit();
-        sqlSession.close();
+        return;
     }
 }

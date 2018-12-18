@@ -21,9 +21,6 @@ public class MainLoop {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         Scanner scanner = new Scanner(System.in);
 
-        DecideMan decideMan = new DecideMan();
-        RecordMan recordMan = new RecordMan();
-        JudgeMan judgeMan = new JudgeMan();
         NodePOJO rootNodePOJO = sqlSession.selectOne("team.chess.Mapper.NodeMapper.queryObject", 0);
         sqlSession.commit();
         sqlSession.close();
@@ -33,12 +30,15 @@ public class MainLoop {
         //循环一次
         int i = 0;
         while (i < 1) {
+            DecideMan decideMan = new DecideMan();
+            RecordMan recordMan = new RecordMan();
+            JudgeMan judgeMan = new JudgeMan();
             while (true) {
                 result = judgeMan.Judge(beginNode);
 
                 String strValue;
-                if (beginNode.getValue() == 1) strValue = "white";
-                else strValue = "black";
+                if (beginNode.getValue() == 1) strValue = "black";
+                else strValue = "white";
 
                 if (result == true) {
                     recordMan.UpdateRecord(beginNode.getValue());
