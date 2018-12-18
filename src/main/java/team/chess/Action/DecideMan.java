@@ -37,13 +37,14 @@ public class DecideMan {
             Integer x = nodeBegin.getX();
             Integer y = nodeBegin.getY();
             Integer value = nodeBegin.getValue();
+            Integer val = (value == 1) ? 2 : 1;
             ChessboardPOJO chessboardBegin = sqlSession.selectOne("team.chess.Mapper.ChessboardMapper.queryObject", nodeBegin.getChessboardId());
             ChessboardPOJO chessboardPOJO = chessboardBegin;
             List<String> lines = chessboardBegin.getLines();
 
             if (x-2 >= 0 && y-2 >= 0 && lines.get(x-2).charAt(y-2) == '0'){
                 StringBuilder stringBuilder = new StringBuilder(lines.get(x-2));
-                stringBuilder.setCharAt(y-2, Character.forDigit(value, 10));
+                stringBuilder.setCharAt(y-2, Character.forDigit(val, 10));
                 lines.set(x-2, stringBuilder.toString());
                 chessboardPOJO.setLines(lines);
                 List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
@@ -57,7 +58,6 @@ public class DecideMan {
                 nodePOJO.setChessboardId(chessboardId);
                 nodePOJO.setX(x-1);
                 nodePOJO.setY(y-1);
-                Integer val = (value == 1) ? 2 : 1;
                 nodePOJO.setValue(val);
 
                 List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
@@ -89,9 +89,9 @@ public class DecideMan {
                 }
             }
 
-            if (y-2 >= 0 && lines.get(x-1).charAt(y-2) == '0'){
+            else if (y-2 >= 0 && lines.get(x-1).charAt(y-2) == '0'){
                 StringBuilder stringBuilder = new StringBuilder(lines.get(x-1));
-                stringBuilder.setCharAt(y-2, Character.forDigit(value, 10));
+                stringBuilder.setCharAt(y-2, Character.forDigit(val, 10));
                 lines.set(x-1, stringBuilder.toString());
                 chessboardPOJO.setLines(lines);
                 List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
@@ -105,7 +105,6 @@ public class DecideMan {
                 nodePOJO.setChessboardId(chessboardId);
                 nodePOJO.setX(x);
                 nodePOJO.setY(y-1);
-                Integer val = (value == 1) ? 2 : 1;
                 nodePOJO.setValue(val);
 
                 List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
@@ -137,9 +136,9 @@ public class DecideMan {
                 }
             }
 
-            if (x <= 14 && y-2 >=0 && lines.get(x).charAt(y-2) == '0'){
+            else if (x <= 14 && y-2 >=0 && lines.get(x).charAt(y-2) == '0'){
                 StringBuilder stringBuilder = new StringBuilder(lines.get(x));
-                stringBuilder.setCharAt(y-2, Character.forDigit(value, 10));
+                stringBuilder.setCharAt(y-2, Character.forDigit(val, 10));
                 lines.set(x, stringBuilder.toString());
                 chessboardPOJO.setLines(lines);
                 List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
@@ -153,7 +152,6 @@ public class DecideMan {
                 nodePOJO.setChessboardId(chessboardId);
                 nodePOJO.setX(x+1);
                 nodePOJO.setY(y-1);
-                Integer val = (value == 1) ? 2 : 1;
                 nodePOJO.setValue(val);
 
                 List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
@@ -185,9 +183,9 @@ public class DecideMan {
                 }
             }
 
-            if (x-2 >= 0 && lines.get(x-2).charAt(y-1) == '0'){
+            else if (x-2 >= 0 && lines.get(x-2).charAt(y-1) == '0'){
                 StringBuilder stringBuilder = new StringBuilder(lines.get(x-2));
-                stringBuilder.setCharAt(y-1, Character.forDigit(value, 10));
+                stringBuilder.setCharAt(y-1, Character.forDigit(val, 10));
                 lines.set(x-2, stringBuilder.toString());
                 chessboardPOJO.setLines(lines);
                 List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
@@ -201,7 +199,6 @@ public class DecideMan {
                 nodePOJO.setChessboardId(chessboardId);
                 nodePOJO.setX(x-1);
                 nodePOJO.setY(y);
-                Integer val = (value == 1) ? 2 : 1;
                 nodePOJO.setValue(val);
 
                 List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
@@ -233,9 +230,9 @@ public class DecideMan {
                 }
             }
 
-            if (x <= 14 && lines.get(x).charAt(y-1) == '0'){
+            else if (x <= 14 && lines.get(x).charAt(y-1) == '0'){
                 StringBuilder stringBuilder = new StringBuilder(lines.get(x));
-                stringBuilder.setCharAt(y-1, Character.forDigit(value, 10));
+                stringBuilder.setCharAt(y-1, Character.forDigit(val, 10));
                 lines.set(x, stringBuilder.toString());
                 chessboardPOJO.setLines(lines);
                 List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
@@ -249,7 +246,6 @@ public class DecideMan {
                 nodePOJO.setChessboardId(chessboardId);
                 nodePOJO.setX(x+1);
                 nodePOJO.setY(y);
-                Integer val = (value == 1) ? 2 : 1;
                 nodePOJO.setValue(val);
 
                 List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
@@ -281,9 +277,9 @@ public class DecideMan {
                 }
             }
 
-            if (x-2 >= 0 && y <= 14 && lines.get(x-2).charAt(y) == '0'){
+            else if (x-2 >= 0 && y <= 14 && lines.get(x-2).charAt(y) == '0'){
                 StringBuilder stringBuilder = new StringBuilder(lines.get(x-2));
-                stringBuilder.setCharAt(y, Character.forDigit(value, 10));
+                stringBuilder.setCharAt(y, Character.forDigit(val, 10));
                 lines.set(x-2, stringBuilder.toString());
                 chessboardPOJO.setLines(lines);
                 List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
@@ -297,7 +293,6 @@ public class DecideMan {
                 nodePOJO.setChessboardId(chessboardId);
                 nodePOJO.setX(x-1);
                 nodePOJO.setY(y+1);
-                Integer val = (value == 1) ? 2 : 1;
                 nodePOJO.setValue(val);
 
                 List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
@@ -329,9 +324,9 @@ public class DecideMan {
                 }
             }
 
-            if (y <= 14 && lines.get(x-1).charAt(y) == '0'){
+            else if (y <= 14 && lines.get(x-1).charAt(y) == '0'){
                 StringBuilder stringBuilder = new StringBuilder(lines.get(x-1));
-                stringBuilder.setCharAt(y, Character.forDigit(value, 10));
+                stringBuilder.setCharAt(y, Character.forDigit(val, 10));
                 lines.set(x-1, stringBuilder.toString());
                 chessboardPOJO.setLines(lines);
                 List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
@@ -345,7 +340,6 @@ public class DecideMan {
                 nodePOJO.setChessboardId(chessboardId);
                 nodePOJO.setX(x);
                 nodePOJO.setY(y+1);
-                Integer val = (value == 1) ? 2 : 1;
                 nodePOJO.setValue(val);
 
                 List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
@@ -377,9 +371,9 @@ public class DecideMan {
                 }
             }
 
-            if (x <= 14 && y <= 14 && lines.get(x).charAt(x) == '0'){
+            else if (x <= 14 && y <= 14 && lines.get(x).charAt(x) == '0'){
                 StringBuilder stringBuilder = new StringBuilder(lines.get(x));
-                stringBuilder.setCharAt(y, Character.forDigit(value, 10));
+                stringBuilder.setCharAt(y, Character.forDigit(val, 10));
                 lines.set(x, stringBuilder.toString());
                 chessboardPOJO.setLines(lines);
                 List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
@@ -393,7 +387,6 @@ public class DecideMan {
                 nodePOJO.setChessboardId(chessboardId);
                 nodePOJO.setX(x+1);
                 nodePOJO.setY(y+1);
-                Integer val = (value == 1) ? 2 : 1;
                 nodePOJO.setValue(val);
 
                 List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
