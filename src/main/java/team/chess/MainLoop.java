@@ -14,12 +14,104 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MainLoop {
-    //计算机后手
-    public static void main(String[] args) throws IOException {
+    //计算机先手
+    public static void FirstHand() throws IOException {
         SqlUtil sqlUtil = new SqlUtil();
         SqlSessionFactory sqlSessionFactory = sqlUtil.getSqlSessionFactory();
         SqlSession sqlSession = sqlSessionFactory.openSession();
         Scanner scanner = new Scanner(System.in);
+
+        NodePOJO rootNodePOJO = sqlSession.selectOne("team.chess.Mapper.NodeMapper.queryObject", 0);
+        System.out.println("computerX: " + rootNodePOJO.getX());
+        System.out.println("computerY: " + rootNodePOJO.getY());
+        String comVal = "black";
+        String humVal = "white";
+
+        System.out.println("computerValue: " + comVal);
+        sqlSession.commit();
+        sqlSession.close();
+        boolean result;
+
+        NodePOJO beginNode = rootNodePOJO;
+        //循环一次
+        int i = 0;
+        while (i < 1) {
+            DecideMan decideMan = new DecideMan();
+            RecordMan recordMan = new RecordMan();
+            JudgeMan judgeMan = new JudgeMan();
+            NodePOJO endNode = new NodePOJO();
+            while (true) {
+                SqlSession sqlSession1 = sqlSessionFactory.openSession();
+
+                System.out.println("Input Human X: ");
+                Integer huX = scanner.nextInt();
+                System.out.println("Input Human Y: ");
+                Integer huY = scanner.nextInt();
+
+                ChessboardPOJO chessboardPOJO = sqlSession1.selectOne("team.chess.Mapper.ChessboardMapper.queryObject", beginNode.getChessboardId());
+                List<String> lines = chessboardPOJO.getLines();
+                StringBuilder stringBuilder = new StringBuilder(lines.get(huX-1));
+                stringBuilder.setCharAt(huY-1, Character.forDigit(2, 10));
+                lines.set(huX-1, stringBuilder.toString());
+                chessboardPOJO.setLines(lines);
+
+                List<ChessboardPOJO> chessboardPOJOList = sqlSession1.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
+                if (chessboardPOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.ChessboardMapper.save", chessboardPOJO);
+                else chessboardPOJO = chessboardPOJOList.get(0);
+                Integer chessboardId = chessboardPOJO.getId();
+
+                endNode.setChessboardId(chessboardId);
+                endNode.setX(huX);
+                endNode.setY(huY);
+                endNode.setValue(2);
+                List<NodePOJO> nodePOJOList = sqlSession1.selectList("team.chess.Mapper.NodeMapper.queryList", endNode);
+                if (nodePOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.NodeMapper.save", endNode);
+                else endNode = nodePOJOList.get(0);
+
+                sqlSession1.commit();
+                recordMan.Record(beginNode, endNode);
+                result = judgeMan.Judge(endNode);
+
+                if (result == true) {
+                    recordMan.UpdateRecord(2);
+                    System.out.println(humVal + " " + "win");
+                    break;
+                }
+
+                beginNode = endNode;
+                endNode = decideMan.Decide(beginNode);
+                System.out.println("computerX: " + endNode.getX());
+                System.out.println("computerY: " + endNode.getY());
+                System.out.println("computerValue: " + comVal);
+
+                recordMan.Record(beginNode, endNode);
+                result = judgeMan.Judge(endNode);
+
+                if (result == true) {
+                    recordMan.UpdateRecord(endNode.getValue());
+                    System.out.println(comVal + " " + "win");
+                    break;
+                }
+                beginNode = endNode;
+
+                sqlSession1.commit();
+                sqlSession1.close();
+            }
+            i++;
+        }
+        scanner.close();
+        return;
+    }
+
+    //计算机后手
+    public static void SecondHand() throws IOException {
+        SqlUtil sqlUtil = new SqlUtil();
+        SqlSessionFactory sqlSessionFactory = sqlUtil.getSqlSessionFactory();
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        Scanner scanner = new Scanner(System.in);
+
+        String comVal = "white";
+        String humVal = "black";
 
         NodePOJO rootNodePOJO = sqlSession.selectOne("team.chess.Mapper.NodeMapper.queryObject", 0);
         sqlSession.commit();
@@ -34,36 +126,31 @@ public class MainLoop {
             RecordMan recordMan = new RecordMan();
             JudgeMan judgeMan = new JudgeMan();
             while (true) {
-                result = judgeMan.Judge(beginNode);
-
-                String strValue;
-                if (beginNode.getValue() == 1) strValue = "black";
-                else strValue = "white";
-
-                if (result == true) {
-                    recordMan.UpdateRecord(beginNode.getValue());
-                    System.out.println(strValue + " " + "win");
-                    break;
-                }
-
                 NodePOJO endNode = decideMan.Decide(beginNode);
                 System.out.println("computerX: " + endNode.getX());
                 System.out.println("computerY: " + endNode.getY());
-                System.out.println("computerValue: " + strValue);
+                System.out.println("computerValue: " + comVal);
                 //记录begin to end
                 recordMan.Record(beginNode, endNode);
+                result = judgeMan.Judge(endNode);
+
+                if (result == true) {
+                    recordMan.UpdateRecord(endNode.getValue());
+                    System.out.println(comVal + " " + "win");
+                    break;
+                }
+                beginNode = endNode;
 
                 System.out.println("Input Human X: ");
                 Integer huX = scanner.nextInt();
                 System.out.println("Input Human Y: ");
                 Integer huY = scanner.nextInt();
-                Integer huVal = beginNode.getValue();
 
                 SqlSession sqlSession1 = sqlSessionFactory.openSession();
                 ChessboardPOJO chessboardPOJO = sqlSession1.selectOne("team.chess.Mapper.ChessboardMapper.queryObject", endNode.getChessboardId());
                 List<String> lines = chessboardPOJO.getLines();
                 StringBuilder stringBuilder = new StringBuilder(lines.get(huX-1));
-                stringBuilder.setCharAt(huY-1, Character.forDigit(huVal, 10));
+                stringBuilder.setCharAt(huY-1, Character.forDigit(1, 10));
                 lines.set(huX-1, stringBuilder.toString());
                 chessboardPOJO.setLines(lines);
 
@@ -72,18 +159,25 @@ public class MainLoop {
                 else chessboardPOJO = chessboardPOJOList.get(0);
                 Integer chessboardId = chessboardPOJO.getId();
 
-                NodePOJO nodePOJO = new NodePOJO();
-                nodePOJO.setChessboardId(chessboardId);
-                nodePOJO.setX(huX);
-                nodePOJO.setY(huY);
-                nodePOJO.setValue(huVal);
-                List<NodePOJO> nodePOJOList = sqlSession1.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
-                if (nodePOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.NodeMapper.save", nodePOJO);
-                else nodePOJO = nodePOJOList.get(0);
+                endNode.setChessboardId(chessboardId);
+                endNode.setX(huX);
+                endNode.setY(huY);
+                endNode.setValue(1);
+                List<NodePOJO> nodePOJOList = sqlSession1.selectList("team.chess.Mapper.NodeMapper.queryList", endNode);
+                if (nodePOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.NodeMapper.save", endNode);
+                else endNode = nodePOJOList.get(0);
 
                 //记录end to next
-                recordMan.Record(endNode, nodePOJO);
-                beginNode = nodePOJO;
+                sqlSession1.commit();
+                recordMan.Record(beginNode, endNode);
+                result = judgeMan.Judge(endNode);
+
+                if (result == true) {
+                    recordMan.UpdateRecord(endNode.getValue());
+                    System.out.println(humVal + " " + "win");
+                    break;
+                }
+                beginNode = endNode;
 
                 sqlSession1.commit();
                 sqlSession1.close();
@@ -92,5 +186,9 @@ public class MainLoop {
         }
         scanner.close();
         return;
+    }
+
+    public static void main(String[] args) throws IOException {
+        SecondHand();
     }
 }
