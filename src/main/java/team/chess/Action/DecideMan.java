@@ -464,7 +464,9 @@ public class DecideMan {
         y2 = y + temp;
         temp = 0;
         if (num == 3) {
-
+            //修改chessboard，查chessboard
+            //查node
+            //调用辅助函数
         }
         else num = 1;
         //
@@ -884,6 +886,7 @@ public class DecideMan {
     }
 
     //辅助函数
+    //默认nodeBegin和nodeEnd存在即数据库包装好的数据
     private Integer getTotal(NodePOJO nodeBegin, NodePOJO nodeEnd) throws IOException {
         SqlSessionFactory sqlSessionFactory = sqlUtil.getSqlSessionFactory();
         SqlSession sqlSession = sqlSessionFactory.openSession();
