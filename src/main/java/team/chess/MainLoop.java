@@ -188,7 +188,50 @@ public class MainLoop {
         return;
     }
 
+    public static void OnesOwn() throws IOException {
+        SqlUtil sqlUtil = new SqlUtil();
+        SqlSessionFactory sqlSessionFactory = sqlUtil.getSqlSessionFactory();
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        NodePOJO rootNodePOJO = sqlSession.selectOne("team.chess.Mapper.NodeMapper.queryObject", 0);
+
+        String comVal1 = "black";
+        String comVal2 = "white";
+
+        NodePOJO beginNode = rootNodePOJO;
+        boolean result;
+        Integer i = 0;
+        //循环一次
+        while (i < 1){
+            DecideMan decideMan = new DecideMan();
+            JudgeMan judgeMan = new JudgeMan();
+            RecordMan recordMan = new RecordMan();
+            while (true){
+                NodePOJO endNode = decideMan.Decide(beginNode);
+                recordMan.Record(beginNode, endNode);
+                result = judgeMan.Judge(endNode);
+                if (result == true) {
+                    recordMan.UpdateRecord(2);
+                    System.out.println("white win");
+                    break;
+                }
+                beginNode = endNode;
+                endNode = decideMan.Decide(beginNode);
+                recordMan.Record(beginNode, endNode);
+                result = judgeMan.Judge(endNode);
+                if (result == true) {
+                    recordMan.UpdateRecord(1);
+                    System.out.println("black win");
+                    break;
+                }
+            }
+            i++;
+        }
+        sqlSession.close();
+        return;
+    }
+
     public static void main(String[] args) throws IOException {
-        SecondHand();
+        OnesOwn();
     }
 }

@@ -25,15 +25,17 @@ public class DecideMan {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         Float filledLevel = filledLevel(nodeBegin);
+        //饱和度大于0.5进行权重决策
         if (filledLevel > 1/2) {
             sqlSession.commit();
             sqlSession.close();
             return weightDecide(nodeBegin);
         }
-        //创建新分支
+        //否则创建新分支，或更新现有循环次数最少的分支
         else {
             NodePOJO nodeEnd = new NodePOJO();
 
+            Integer totalTimeChoice = totalTime(nodeBegin);
             Integer x = nodeBegin.getX();
             Integer y = nodeBegin.getY();
             Integer value = nodeBegin.getValue();
@@ -42,7 +44,7 @@ public class DecideMan {
             ChessboardPOJO chessboardPOJO = chessboardBegin;
             List<String> lines = chessboardBegin.getLines();
 
-            if (x-2 >= 0 && y-2 >= 0 && lines.get(x-2).charAt(y-2) == '0'){
+            if (totalTimeChoice == 1){
                 StringBuilder stringBuilder = new StringBuilder(lines.get(x-2));
                 stringBuilder.setCharAt(y-2, Character.forDigit(val, 10));
                 lines.set(x-2, stringBuilder.toString());
@@ -89,7 +91,7 @@ public class DecideMan {
                 }
             }
 
-            else if (y-2 >= 0 && lines.get(x-1).charAt(y-2) == '0'){
+            else if (totalTimeChoice == 2){
                 StringBuilder stringBuilder = new StringBuilder(lines.get(x-1));
                 stringBuilder.setCharAt(y-2, Character.forDigit(val, 10));
                 lines.set(x-1, stringBuilder.toString());
@@ -136,7 +138,7 @@ public class DecideMan {
                 }
             }
 
-            else if (x <= 14 && y-2 >=0 && lines.get(x).charAt(y-2) == '0'){
+            else if (totalTimeChoice == 3){
                 StringBuilder stringBuilder = new StringBuilder(lines.get(x));
                 stringBuilder.setCharAt(y-2, Character.forDigit(val, 10));
                 lines.set(x, stringBuilder.toString());
@@ -183,7 +185,7 @@ public class DecideMan {
                 }
             }
 
-            else if (x-2 >= 0 && lines.get(x-2).charAt(y-1) == '0'){
+            else if (totalTimeChoice == 4){
                 StringBuilder stringBuilder = new StringBuilder(lines.get(x-2));
                 stringBuilder.setCharAt(y-1, Character.forDigit(val, 10));
                 lines.set(x-2, stringBuilder.toString());
@@ -230,7 +232,7 @@ public class DecideMan {
                 }
             }
 
-            else if (x <= 14 && lines.get(x).charAt(y-1) == '0'){
+            else if (totalTimeChoice == 5){
                 StringBuilder stringBuilder = new StringBuilder(lines.get(x));
                 stringBuilder.setCharAt(y-1, Character.forDigit(val, 10));
                 lines.set(x, stringBuilder.toString());
@@ -277,7 +279,7 @@ public class DecideMan {
                 }
             }
 
-            else if (x-2 >= 0 && y <= 14 && lines.get(x-2).charAt(y) == '0'){
+            else if (totalTimeChoice == 6){
                 StringBuilder stringBuilder = new StringBuilder(lines.get(x-2));
                 stringBuilder.setCharAt(y, Character.forDigit(val, 10));
                 lines.set(x-2, stringBuilder.toString());
@@ -324,7 +326,7 @@ public class DecideMan {
                 }
             }
 
-            else if (y <= 14 && lines.get(x-1).charAt(y) == '0'){
+            else if (totalTimeChoice == 7){
                 StringBuilder stringBuilder = new StringBuilder(lines.get(x-1));
                 stringBuilder.setCharAt(y, Character.forDigit(val, 10));
                 lines.set(x-1, stringBuilder.toString());
@@ -371,7 +373,7 @@ public class DecideMan {
                 }
             }
 
-            else if (x <= 14 && y <= 14 && lines.get(x).charAt(x) == '0'){
+            else if (totalTimeChoice == 8){
                 StringBuilder stringBuilder = new StringBuilder(lines.get(x));
                 stringBuilder.setCharAt(y, Character.forDigit(val, 10));
                 lines.set(x, stringBuilder.toString());
@@ -424,7 +426,53 @@ public class DecideMan {
         }
     }
 
-    //单纯权重决策
+    //三子围堵
+    public NodePOJO threeStopUp(NodePOJO nodeBegin) throws IOException {
+        SqlSessionFactory sqlSessionFactory = sqlUtil.getSqlSessionFactory();
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        Integer chessboardId = nodeBegin.getChessboardId();
+        ChessboardPOJO chessboardPOJO = sqlSession.selectOne("team.chess.Mapper.ChessboardMapper.queryObject", chessboardId);
+
+        Integer x = nodeBegin.getX();
+        Integer y = nodeBegin.getY();
+        //把Integer转化成char
+        char value = Character.forDigit(nodeBegin.getValue(), 10);
+        List<String> lines = chessboardPOJO.getLines();
+        String currLine = lines.get(x-1);
+
+        Integer x1;
+        Integer x2;
+        Integer y1;
+        Integer y2;
+
+        int num = 1;
+        int temp = 0;
+        //水平方向，左
+        while ((y-temp-2 >= 0 && currLine.charAt(y-temp-2) == value)){
+            num++;
+            temp++;
+        }
+        x1 = x;
+        y1 = y - temp;
+        temp = 0;//右
+        while ((y+temp <= 14 && currLine.charAt(y+temp) == value)){
+            num++;
+            temp++;
+        }
+        x2 = x;
+        y2 = y + temp;
+        temp = 0;
+        if (num == 3) {
+
+        }
+        else num = 1;
+        //
+
+        sqlSession.close();
+    }
+
+    //权重分析
     public NodePOJO weightDecide(NodePOJO nodeBegin) throws IOException {
         SqlSessionFactory sqlSessionFactory = sqlUtil.getSqlSessionFactory();
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -504,5 +552,380 @@ public class DecideMan {
         sqlSession.commit();
         sqlSession.close();
         return filledLevel;
+    }
+
+    //循环次数分析
+    public Integer totalTime(NodePOJO nodeBegin) throws IOException {
+        SqlSessionFactory sqlSessionFactory = sqlUtil.getSqlSessionFactory();
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        Integer chessboardBeginId = nodeBegin.getChessboardId();
+        ChessboardPOJO chessboardBegin = sqlSession.selectOne("team.chess.Mapper.ChessboardMapper.queryObject", chessboardBeginId);
+        List<String> lines = chessboardBegin.getLines();
+
+        Integer x = nodeBegin.getX();
+        Integer y = nodeBegin.getY();
+        Integer value = nodeBegin.getValue();
+        Integer val = (value == 1) ? 2 : 1;
+        Integer total = 0;
+        Integer result = 0;
+
+        if (x-2 >= 0 && y-2 >= 0 && lines.get(x-2).charAt(y-2) == '0') {
+            StringBuilder stringBuilder = new StringBuilder(lines.get(x-2));
+            stringBuilder.setCharAt(y-2, Character.forDigit(val, 10));
+            lines.set(x-2, stringBuilder.toString());
+            chessboardBegin.setLines(lines);
+            List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardBegin);
+            //判断网路中是否有该棋盘记录
+            //如果不存在返回total = 1
+            if (chessboardPOJOList.size() == 0 && total >= 1) {
+                total = 1;
+                result = 1;
+            }
+            else {
+                chessboardBegin = chessboardPOJOList.get(0);
+
+                Integer chessboardId = chessboardBegin.getId();
+                NodePOJO nodePOJO = new NodePOJO();
+                nodePOJO.setChessboardId(chessboardId);
+                nodePOJO.setX(x-1);
+                nodePOJO.setY(y-1);
+                nodePOJO.setValue(val);
+
+                List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
+                //判断网络中节点是否存在
+                //如果不存在，返回total = 1
+                if (nodePOJOList.size() == 0 && total >= 1) {
+                    total = 1;
+                    result = 1;
+                }
+                else {
+                    nodePOJO = nodePOJOList.get(0);
+                    Integer temp = getTotal(nodeBegin, nodePOJO);
+                    if (total >= temp) {
+                        total = temp;
+                        result = 1;
+                    }
+                }
+            }
+        }
+        if (y-2 >= 0 && lines.get(x-1).charAt(y-2) == '0') {
+            StringBuilder stringBuilder = new StringBuilder(lines.get(x-1));
+            stringBuilder.setCharAt(y-2, Character.forDigit(val, 10));
+            lines.set(x-1, stringBuilder.toString());
+            chessboardBegin.setLines(lines);
+            List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardBegin);
+            //判断网路中是否有该棋盘记录
+            //如果不存在返回total = 1
+            if (chessboardPOJOList.size() == 0 && total >= 1) {
+                total = 1;
+                result = 2;
+            }
+            else {
+                chessboardBegin = chessboardPOJOList.get(0);
+
+                Integer chessboardId = chessboardBegin.getId();
+                NodePOJO nodePOJO = new NodePOJO();
+                nodePOJO.setChessboardId(chessboardId);
+                nodePOJO.setX(x);
+                nodePOJO.setY(y-1);
+                nodePOJO.setValue(val);
+
+                List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
+                //判断网络中节点是否存在
+                //如果不存在，返回total = 1
+                if (nodePOJOList.size() == 0 && total >= 1) {
+                    total = 1;
+                    result = 2;
+                }
+                else {
+                    nodePOJO = nodePOJOList.get(0);
+                    Integer temp = getTotal(nodeBegin, nodePOJO);
+                    if (total >= temp) {
+                        total = temp;
+                        result = 2;
+                    }
+                }
+            }
+        }
+        if (x <= 14 && y-2 >=0 && lines.get(x).charAt(y-2) == '0') {
+            StringBuilder stringBuilder = new StringBuilder(lines.get(x));
+            stringBuilder.setCharAt(y-2, Character.forDigit(val, 10));
+            lines.set(x, stringBuilder.toString());
+            chessboardBegin.setLines(lines);
+            List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardBegin);
+            //判断网路中是否有该棋盘记录
+            //如果不存在返回total = 1
+            if (chessboardPOJOList.size() == 0 && total >= 1) {
+                total = 1;
+                result = 3;
+            }
+            else {
+                chessboardBegin = chessboardPOJOList.get(0);
+
+                Integer chessboardId = chessboardBegin.getId();
+                NodePOJO nodePOJO = new NodePOJO();
+                nodePOJO.setChessboardId(chessboardId);
+                nodePOJO.setX(x+1);
+                nodePOJO.setY(y-1);
+                nodePOJO.setValue(val);
+
+                List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
+                //判断网络中节点是否存在
+                //如果不存在，返回total = 1
+                if (nodePOJOList.size() == 0 && total >= 1) {
+                    total = 1;
+                    result = 3;
+                }
+                else {
+                    nodePOJO = nodePOJOList.get(0);
+                    Integer temp = getTotal(nodeBegin, nodePOJO);
+                    if (total >= temp) {
+                        total = temp;
+                        result = 3;
+                    }
+                }
+            }
+        }
+        if (x-2 >= 0 && lines.get(x-2).charAt(y-1) == '0') {
+            StringBuilder stringBuilder = new StringBuilder(lines.get(x-2));
+            stringBuilder.setCharAt(y-1, Character.forDigit(val, 10));
+            lines.set(x-2, stringBuilder.toString());
+            chessboardBegin.setLines(lines);
+            List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardBegin);
+            //判断网路中是否有该棋盘记录
+            //如果不存在返回total = 1
+            if (chessboardPOJOList.size() == 0 && total >= 1) {
+                total = 1;
+                result = 4;
+            }
+            else {
+                chessboardBegin = chessboardPOJOList.get(0);
+
+                Integer chessboardId = chessboardBegin.getId();
+                NodePOJO nodePOJO = new NodePOJO();
+                nodePOJO.setChessboardId(chessboardId);
+                nodePOJO.setX(x-1);
+                nodePOJO.setY(y);
+                nodePOJO.setValue(val);
+
+                List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
+                //判断网络中节点是否存在
+                //如果不存在，返回total = 1
+                if (nodePOJOList.size() == 0 && total >= 1) {
+                    total = 1;
+                    result = 4;
+                }
+                else {
+                    nodePOJO = nodePOJOList.get(0);
+                    Integer temp = getTotal(nodeBegin, nodePOJO);
+                    if (total >= temp) {
+                        total = temp;
+                        result = 4;
+                    }
+                }
+            }
+        }
+        if (x <= 14 && lines.get(x).charAt(y-1) == '0') {
+            StringBuilder stringBuilder = new StringBuilder(lines.get(x));
+            stringBuilder.setCharAt(y-1, Character.forDigit(val, 10));
+            lines.set(x, stringBuilder.toString());
+            chessboardBegin.setLines(lines);
+            List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardBegin);
+            //判断网路中是否有该棋盘记录
+            //如果不存在返回total = 1
+            if (chessboardPOJOList.size() == 0 && total >= 1) {
+                total = 1;
+                result = 5;
+            }
+            else {
+                chessboardBegin = chessboardPOJOList.get(0);
+
+                Integer chessboardId = chessboardBegin.getId();
+                NodePOJO nodePOJO = new NodePOJO();
+                nodePOJO.setChessboardId(chessboardId);
+                nodePOJO.setX(x+1);
+                nodePOJO.setY(y);
+                nodePOJO.setValue(val);
+
+                List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
+                //判断网络中节点是否存在
+                //如果不存在，返回total = 1
+                if (nodePOJOList.size() == 0 && total >= 1) {
+                    total = 1;
+                    result = 5;
+                }
+                else {
+                    nodePOJO = nodePOJOList.get(0);
+                    Integer temp = getTotal(nodeBegin, nodePOJO);
+                    if (total >= temp) {
+                        total = temp;
+                        result = 5;
+                    }
+                }
+            }
+        }
+        if (x-2 >= 0 && y <= 14 && lines.get(x-2).charAt(y) == '0') {
+            StringBuilder stringBuilder = new StringBuilder(lines.get(x-2));
+            stringBuilder.setCharAt(y, Character.forDigit(val, 10));
+            lines.set(x-2, stringBuilder.toString());
+            chessboardBegin.setLines(lines);
+            List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardBegin);
+            //判断网路中是否有该棋盘记录
+            //如果不存在返回total = 1
+            if (chessboardPOJOList.size() == 0 && total >= 1) {
+                total = 1;
+                result = 6;
+            }
+            else {
+                chessboardBegin = chessboardPOJOList.get(0);
+
+                Integer chessboardId = chessboardBegin.getId();
+                NodePOJO nodePOJO = new NodePOJO();
+                nodePOJO.setChessboardId(chessboardId);
+                nodePOJO.setX(x-1);
+                nodePOJO.setY(y+1);
+                nodePOJO.setValue(val);
+
+                List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
+                //判断网络中节点是否存在
+                //如果不存在，返回total = 1
+                if (nodePOJOList.size() == 0 && total >= 1) {
+                    total = 1;
+                    result = 6;
+                }
+                else {
+                    nodePOJO = nodePOJOList.get(0);
+                    Integer temp = getTotal(nodeBegin, nodePOJO);
+                    if (total >= temp) {
+                        total = temp;
+                        result = 6;
+                    }
+                }
+            }
+        }
+        if (y <= 14 && lines.get(x-1).charAt(y) == '0') {
+            StringBuilder stringBuilder = new StringBuilder(lines.get(x-1));
+            stringBuilder.setCharAt(y, Character.forDigit(val, 10));
+            lines.set(x-1, stringBuilder.toString());
+            chessboardBegin.setLines(lines);
+            List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardBegin);
+            //判断网路中是否有该棋盘记录
+            //如果不存在返回total = 1
+            if (chessboardPOJOList.size() == 0 && total >= 1) {
+                total = 1;
+                result = 7;
+            }
+            else {
+                chessboardBegin = chessboardPOJOList.get(0);
+
+                Integer chessboardId = chessboardBegin.getId();
+                NodePOJO nodePOJO = new NodePOJO();
+                nodePOJO.setChessboardId(chessboardId);
+                nodePOJO.setX(x);
+                nodePOJO.setY(y+1);
+                nodePOJO.setValue(val);
+
+                List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
+                //判断网络中节点是否存在
+                //如果不存在，返回total = 1
+                if (nodePOJOList.size() == 0 && total >= 1) {
+                    total = 1;
+                    result = 7;
+                }
+                else {
+                    nodePOJO = nodePOJOList.get(0);
+                    Integer temp = getTotal(nodeBegin, nodePOJO);
+                    if (total >= temp) {
+                        total = temp;
+                        result = 7;
+                    }
+                }
+            }
+        }
+        if (x <= 14 && y <= 14 && lines.get(x).charAt(x) == '0') {
+            StringBuilder stringBuilder = new StringBuilder(lines.get(x));
+            stringBuilder.setCharAt(y, Character.forDigit(val, 10));
+            lines.set(x, stringBuilder.toString());
+            chessboardBegin.setLines(lines);
+            List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardBegin);
+            //判断网路中是否有该棋盘记录
+            //如果不存在返回total = 1
+            if (chessboardPOJOList.size() == 0 && total >= 1) {
+                result = 8;
+            }
+            else {
+                chessboardBegin = chessboardPOJOList.get(0);
+
+                Integer chessboardId = chessboardBegin.getId();
+                NodePOJO nodePOJO = new NodePOJO();
+                nodePOJO.setChessboardId(chessboardId);
+                nodePOJO.setX(x+1);
+                nodePOJO.setY(y+1);
+                nodePOJO.setValue(val);
+
+                List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
+                //判断网络中节点是否存在
+                //如果不存在，返回total = 1
+                if (nodePOJOList.size() == 0 && total >= 1) {
+                    result = 8;
+                }
+                else {
+                    nodePOJO = nodePOJOList.get(0);
+                    Integer temp = getTotal(nodeBegin, nodePOJO);
+                    if (total >= temp) {
+                        result = 8;
+                    }
+                }
+            }
+        }
+        sqlSession.commit();
+        sqlSession.close();
+        return result;
+    }
+
+    //辅助函数
+    private Integer getTotal(NodePOJO nodeBegin, NodePOJO nodeEnd) throws IOException {
+        SqlSessionFactory sqlSessionFactory = sqlUtil.getSqlSessionFactory();
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        Integer total;
+        Map param = new HashMap();
+        param.put("nodeBeginId", nodeBegin.getId());
+        param.put("nodeEndId", nodeEnd.getId());
+        List<RelationPOJO> relationPOJOList = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
+        if (relationPOJOList.size() == 0) total = 1;
+        else {
+            RelationPOJO relationPOJO = relationPOJOList.get(0);
+            Integer stepId = relationPOJO.getStepId();
+            StepPOJO stepPOJO = sqlSession.selectOne("team.chess.Mapper.StepMapper.queryObject", stepId);
+            total = stepPOJO.getTotal();
+        }
+
+        sqlSession.close();
+        return total;
+    }
+
+    private Integer getWinTime(NodePOJO nodeBegin, NodePOJO nodeEnd) throws IOException {
+        SqlSessionFactory sqlSessionFactory = sqlUtil.getSqlSessionFactory();
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        Map param = new HashMap();
+        param.put("nodeBeginId", nodeBegin.getId());
+        param.put("nodeEndId", nodeEnd.getId());
+        List<RelationPOJO> relationPOJOList = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
+        if (relationPOJOList.size() == 0) {
+            sqlSession.close();
+            return 0;
+        }
+        else {
+            RelationPOJO relationPOJO = relationPOJOList.get(0);
+            Integer stepId = relationPOJO.getStepId();
+            StepPOJO stepPOJO = sqlSession.selectOne("team.chess.Mapper.StepMapper.queryObject", stepId);
+            sqlSession.close();
+            if (nodeBegin.getValue() == 1) return stepPOJO.getWhiteWin();
+            else return stepPOJO.getBlackWin();
+        }
+
+
     }
 }
