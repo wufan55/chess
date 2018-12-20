@@ -443,7 +443,7 @@ public class DecideMan {
         Integer y = nodeBegin.getY();
         //把Integer转化成char
         char value = Character.forDigit(nodeBegin.getValue(), 10);
-        Integer val = (value == 1) ? 2 : 1;
+        Integer val = (value == '1') ? 2 : 1;
         List<String> lines = chessboardPOJO.getLines();
         String currLine = lines.get(x-1);
 
@@ -461,573 +461,575 @@ public class DecideMan {
             temp++;
         }
         x1 = x;
-        y1 = y - temp;
+        y1 = y - temp - 1;
         temp = 0;//右
         while (y+temp <= 14 && currLine.charAt(y+temp) == value){
             num++;
             temp++;
         }
         x2 = x;
-        y2 = y + temp;
-        if (num == 3) {
-            //修改chessboard，查chessboard/
-            //查node/
-            //调用辅助函数/
-            //比较weight返回node，可能要new
-            Float weight1;
-            Float weight2;
-            NodePOJO nodePOJO1 = new NodePOJO();
-            NodePOJO nodePOJO2 = new NodePOJO();
-            ChessboardPOJO chessboardPOJO1;
-            ChessboardPOJO chessboardPOJO2;
+        y2 = y + temp + 1;
+        if (y1 >= 1 && y2 <= 15 && currLine.charAt(y1-1) == '0' && currLine.charAt(y2-1) == '0'){
+            if (num == 3) {
+                //修改chessboard，查chessboard/
+                //查node/
+                //调用辅助函数/
+                //比较weight返回node，可能要new
+                Float weight1;
+                Float weight2;
+                NodePOJO nodePOJO1 = new NodePOJO();
+                NodePOJO nodePOJO2 = new NodePOJO();
+                ChessboardPOJO chessboardPOJO1;
+                ChessboardPOJO chessboardPOJO2;
 
-            //获取weight1
-            StringBuilder stringBuilder = new StringBuilder(lines.get(x1-1));
-            stringBuilder.setCharAt(y1-1, Character.forDigit(val, 10));
-            lines.set(x1-1, stringBuilder.toString());
-            chessboardPOJO.setLines(lines);
-            chessboardPOJO1 = chessboardPOJO;
-            List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
-            if (chessboardPOJOList.size() == 0) weight1 = Float.valueOf(1/3);
-            else {
-                NodePOJO nodePOJO = new NodePOJO();
-                nodePOJO.setChessboardId(chessboardPOJO.getId());
-                nodePOJO.setX(x1);
-                nodePOJO.setY(y1);
-                nodePOJO.setValue(val);
-
-                List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
-                if (nodePOJOList.size() == 0) weight1 = Float.valueOf(1/3);
+                //获取weight1
+                StringBuilder stringBuilder = new StringBuilder(lines.get(x1-1));
+                stringBuilder.setCharAt(y1-1, Character.forDigit(val, 10));
+                lines.set(x1-1, stringBuilder.toString());
+                chessboardPOJO.setLines(lines);
+                chessboardPOJO1 = chessboardPOJO;
+                List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
+                if (chessboardPOJOList.size() == 0) weight1 = Float.valueOf(1/3);
                 else {
-                    nodePOJO = nodePOJOList.get(0);
-                    weight1 = choiceWeight(nodeBegin, nodePOJO);
+                    NodePOJO nodePOJO = new NodePOJO();
+                    nodePOJO.setChessboardId(chessboardPOJO.getId());
+                    nodePOJO.setX(x1);
+                    nodePOJO.setY(y1);
+                    nodePOJO.setValue(val);
+
+                    List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
+                    if (nodePOJOList.size() == 0) weight1 = Float.valueOf(1/3);
+                    else {
+                        nodePOJO = nodePOJOList.get(0);
+                        weight1 = choiceWeight(nodeBegin, nodePOJO);
+                    }
                 }
-            }
 
-            //获取weight2
-            chessboardPOJO = chessboardBegin;
-            stringBuilder = new StringBuilder(lines.get(x2-1));
-            stringBuilder.setCharAt(y2-1, Character.forDigit(val, 10));
-            lines.set(x2-1, stringBuilder.toString());
-            chessboardPOJO.setLines(lines);
-            chessboardPOJO2 = chessboardPOJO;
-            chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
-            if (chessboardPOJOList.size() == 0) weight2 = Float.valueOf(1/3);
-            else {
-                NodePOJO nodePOJO = new NodePOJO();
-                nodePOJO.setChessboardId(chessboardPOJO.getId());
-                nodePOJO.setX(x2);
-                nodePOJO.setY(y2);
-                nodePOJO.setValue(val);
-
-                List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
-                if (nodePOJOList.size() == 0) weight2 = Float.valueOf(1/3);
+                //获取weight2
+                chessboardPOJO = chessboardBegin;
+                stringBuilder = new StringBuilder(lines.get(x2-1));
+                stringBuilder.setCharAt(y2-1, Character.forDigit(val, 10));
+                lines.set(x2-1, stringBuilder.toString());
+                chessboardPOJO.setLines(lines);
+                chessboardPOJO2 = chessboardPOJO;
+                chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
+                if (chessboardPOJOList.size() == 0) weight2 = Float.valueOf(1/3);
                 else {
-                    nodePOJO = nodePOJOList.get(0);
-                    weight2 = choiceWeight(nodeBegin, nodePOJO);
-                }
-            }
+                    NodePOJO nodePOJO = new NodePOJO();
+                    nodePOJO.setChessboardId(chessboardPOJO.getId());
+                    nodePOJO.setX(x2);
+                    nodePOJO.setY(y2);
+                    nodePOJO.setValue(val);
 
-            if (weight1 > weight2) {
-                SqlSession sqlSession1 = sqlSessionFactory.openSession();
-                chessboardPOJOList = sqlSession1.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO1);
-                if (chessboardPOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.ChessboardMapper.save", chessboardPOJO1);
-                else chessboardPOJO1 = chessboardPOJOList.get(0);
-                nodePOJO1.setChessboardId(chessboardPOJO1.getId());
-                nodePOJO1.setX(x1);nodePOJO1.setY(y1);nodePOJO1.setValue(val);
-                List<NodePOJO> nodePOJOList = sqlSession1.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO1);
-                if (nodePOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.NodeMapper.save", nodePOJO1);
-                else nodePOJO1 = nodePOJOList.get(0);
-
-                Map param = new HashMap();
-                param.put("nodeBeginId", nodeBegin.getId());
-                param.put("nodeEndId", nodePOJO1.getId());
-                List<RelationPOJO> relationPOJOList = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
-                //判断网络中节点间的关系是否存在
-                //如果不存在，创建关系
-                //先创建step，再创建relation
-                if (relationPOJOList.size() == 0){
-                    StepPOJO stepPOJO = new StepPOJO();
-                    sqlSession1.insert("team.chess.Mapper.StepMapper.save", stepPOJO);
-                    Integer stepId = stepPOJO.getId();
-                    RelationPOJO relationPOJO = new RelationPOJO();
-                    relationPOJO.setNodeBeginId(nodeBegin.getId());
-                    relationPOJO.setNodeEndId(nodePOJO1.getId());
-                    relationPOJO.setStepId(stepId);
-                    sqlSession1.insert("team.chess.Mapper.RelationMapper.save", relationPOJO);
+                    List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
+                    if (nodePOJOList.size() == 0) weight2 = Float.valueOf(1/3);
+                    else {
+                        nodePOJO = nodePOJOList.get(0);
+                        weight2 = choiceWeight(nodeBegin, nodePOJO);
+                    }
                 }
 
-                sqlSession1.commit();
-                sqlSession1.close();
-                return nodePOJO1;
-            }
-            else {
-                SqlSession sqlSession1 = sqlSessionFactory.openSession();
-                chessboardPOJOList = sqlSession1.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO2);
-                if (chessboardPOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.ChessboardMapper.save", chessboardPOJO2);
-                else chessboardPOJO2 = chessboardPOJOList.get(0);
-                nodePOJO2.setChessboardId(chessboardPOJO2.getId());
-                nodePOJO2.setX(x2);nodePOJO2.setY(y2);nodePOJO2.setValue(val);
-                List<NodePOJO> nodePOJOList = sqlSession1.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO2);
-                if (nodePOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.NodeMapper.save", nodePOJO2);
-                else nodePOJO2 = nodePOJOList.get(0);
+                if (weight1 > weight2) {
+                    SqlSession sqlSession1 = sqlSessionFactory.openSession();
+                    chessboardPOJOList = sqlSession1.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO1);
+                    if (chessboardPOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.ChessboardMapper.save", chessboardPOJO1);
+                    else chessboardPOJO1 = chessboardPOJOList.get(0);
+                    nodePOJO1.setChessboardId(chessboardPOJO1.getId());
+                    nodePOJO1.setX(x1);nodePOJO1.setY(y1);nodePOJO1.setValue(val);
+                    List<NodePOJO> nodePOJOList = sqlSession1.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO1);
+                    if (nodePOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.NodeMapper.save", nodePOJO1);
+                    else nodePOJO1 = nodePOJOList.get(0);
 
-                Map param = new HashMap();
-                param.put("nodeBeginId", nodeBegin.getId());
-                param.put("nodeEndId", nodePOJO2.getId());
-                List<RelationPOJO> relationPOJOList = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
-                //判断网络中节点间的关系是否存在
-                //如果不存在，创建关系
-                //先创建step，再创建relation
-                if (relationPOJOList.size() == 0){
-                    StepPOJO stepPOJO = new StepPOJO();
-                    sqlSession1.insert("team.chess.Mapper.StepMapper.save", stepPOJO);
-                    Integer stepId = stepPOJO.getId();
-                    RelationPOJO relationPOJO = new RelationPOJO();
-                    relationPOJO.setNodeBeginId(nodeBegin.getId());
-                    relationPOJO.setNodeEndId(nodePOJO2.getId());
-                    relationPOJO.setStepId(stepId);
-                    sqlSession1.insert("team.chess.Mapper.RelationMapper.save", relationPOJO);
+                    Map param = new HashMap();
+                    param.put("nodeBeginId", nodeBegin.getId());
+                    param.put("nodeEndId", nodePOJO1.getId());
+                    List<RelationPOJO> relationPOJOList = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
+                    //判断网络中节点间的关系是否存在
+                    //如果不存在，创建关系
+                    //先创建step，再创建relation
+                    if (relationPOJOList.size() == 0){
+                        StepPOJO stepPOJO = new StepPOJO();
+                        sqlSession1.insert("team.chess.Mapper.StepMapper.save", stepPOJO);
+                        Integer stepId = stepPOJO.getId();
+                        RelationPOJO relationPOJO = new RelationPOJO();
+                        relationPOJO.setNodeBeginId(nodeBegin.getId());
+                        relationPOJO.setNodeEndId(nodePOJO1.getId());
+                        relationPOJO.setStepId(stepId);
+                        sqlSession1.insert("team.chess.Mapper.RelationMapper.save", relationPOJO);
+                    }
+
+                    sqlSession1.commit();
+                    sqlSession1.close();
+                    return nodePOJO1;
                 }
+                else {
+                    SqlSession sqlSession1 = sqlSessionFactory.openSession();
+                    chessboardPOJOList = sqlSession1.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO2);
+                    if (chessboardPOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.ChessboardMapper.save", chessboardPOJO2);
+                    else chessboardPOJO2 = chessboardPOJOList.get(0);
+                    nodePOJO2.setChessboardId(chessboardPOJO2.getId());
+                    nodePOJO2.setX(x2);nodePOJO2.setY(y2);nodePOJO2.setValue(val);
+                    List<NodePOJO> nodePOJOList = sqlSession1.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO2);
+                    if (nodePOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.NodeMapper.save", nodePOJO2);
+                    else nodePOJO2 = nodePOJOList.get(0);
 
-                sqlSession1.commit();
-                sqlSession1.close();
-                return nodePOJO2;
+                    Map param = new HashMap();
+                    param.put("nodeBeginId", nodeBegin.getId());
+                    param.put("nodeEndId", nodePOJO2.getId());
+                    List<RelationPOJO> relationPOJOList = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
+                    //判断网络中节点间的关系是否存在
+                    //如果不存在，创建关系
+                    //先创建step，再创建relation
+                    if (relationPOJOList.size() == 0){
+                        StepPOJO stepPOJO = new StepPOJO();
+                        sqlSession1.insert("team.chess.Mapper.StepMapper.save", stepPOJO);
+                        Integer stepId = stepPOJO.getId();
+                        RelationPOJO relationPOJO = new RelationPOJO();
+                        relationPOJO.setNodeBeginId(nodeBegin.getId());
+                        relationPOJO.setNodeEndId(nodePOJO2.getId());
+                        relationPOJO.setStepId(stepId);
+                        sqlSession1.insert("team.chess.Mapper.RelationMapper.save", relationPOJO);
+                    }
+
+                    sqlSession1.commit();
+                    sqlSession1.close();
+                    return nodePOJO2;
+                }
             }
         }
-        else {
-            num = 1;
-            temp = 0;
-        }
+        num = 1;
+        temp = 0;
 
         //垂直方向，上
         while (x-temp-2 >= 0 && lines.get(x-temp-2).charAt(y-1) == value){
             num++;
             temp++;
         }
-        x1 = x - temp;
+        x1 = x - temp - 1;
         y1 = y;
         temp = 0;//下
         while (x+temp <= 14 && lines.get(x+temp).charAt(y-1) == value){
             num++;
             temp++;
         }
-        x2 = x + temp;
+        x2 = x + temp + 1;
         y2 = y;
-        if (num == 3) {
-            //修改chessboard，查chessboard/
-            //查node/
-            //调用辅助函数/
-            //比较weight返回node，可能要new
-            Float weight1;
-            Float weight2;
-            NodePOJO nodePOJO1 = new NodePOJO();
-            NodePOJO nodePOJO2 = new NodePOJO();
-            ChessboardPOJO chessboardPOJO1;
-            ChessboardPOJO chessboardPOJO2;
+        if (x1 >= 1 && x2 <= 15 && lines.get(x1-1).charAt(y1-1) == '0' && lines.get(x2-1).charAt(y2-1) == '0') {
+            if (num == 3) {
+                //修改chessboard，查chessboard/
+                //查node/
+                //调用辅助函数/
+                //比较weight返回node，可能要new
+                Float weight1;
+                Float weight2;
+                NodePOJO nodePOJO1 = new NodePOJO();
+                NodePOJO nodePOJO2 = new NodePOJO();
+                ChessboardPOJO chessboardPOJO1;
+                ChessboardPOJO chessboardPOJO2;
 
-            //获取weight1
-            StringBuilder stringBuilder = new StringBuilder(lines.get(x1-1));
-            stringBuilder.setCharAt(y1-1, Character.forDigit(val, 10));
-            lines.set(x1-1, stringBuilder.toString());
-            chessboardPOJO.setLines(lines);
-            chessboardPOJO1 = chessboardPOJO;
-            List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
-            if (chessboardPOJOList.size() == 0) weight1 = Float.valueOf(1/3);
-            else {
-                NodePOJO nodePOJO = new NodePOJO();
-                nodePOJO.setChessboardId(chessboardPOJO.getId());
-                nodePOJO.setX(x1);
-                nodePOJO.setY(y1);
-                nodePOJO.setValue(val);
-
-                List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
-                if (nodePOJOList.size() == 0) weight1 = Float.valueOf(1/3);
+                //获取weight1
+                StringBuilder stringBuilder = new StringBuilder(lines.get(x1-1));
+                stringBuilder.setCharAt(y1-1, Character.forDigit(val, 10));
+                lines.set(x1-1, stringBuilder.toString());
+                chessboardPOJO.setLines(lines);
+                chessboardPOJO1 = chessboardPOJO;
+                List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
+                if (chessboardPOJOList.size() == 0) weight1 = Float.valueOf(1/3);
                 else {
-                    nodePOJO = nodePOJOList.get(0);
-                    weight1 = choiceWeight(nodeBegin, nodePOJO);
+                    NodePOJO nodePOJO = new NodePOJO();
+                    nodePOJO.setChessboardId(chessboardPOJO.getId());
+                    nodePOJO.setX(x1);
+                    nodePOJO.setY(y1);
+                    nodePOJO.setValue(val);
+
+                    List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
+                    if (nodePOJOList.size() == 0) weight1 = Float.valueOf(1/3);
+                    else {
+                        nodePOJO = nodePOJOList.get(0);
+                        weight1 = choiceWeight(nodeBegin, nodePOJO);
+                    }
                 }
-            }
 
-            //获取weight2
-            chessboardPOJO = chessboardBegin;
-            stringBuilder = new StringBuilder(lines.get(x2-1));
-            stringBuilder.setCharAt(y2-1, Character.forDigit(val, 10));
-            lines.set(x2-1, stringBuilder.toString());
-            chessboardPOJO.setLines(lines);
-            chessboardPOJO2 = chessboardPOJO;
-            chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
-            if (chessboardPOJOList.size() == 0) weight2 = Float.valueOf(1/3);
-            else {
-                NodePOJO nodePOJO = new NodePOJO();
-                nodePOJO.setChessboardId(chessboardPOJO.getId());
-                nodePOJO.setX(x2);
-                nodePOJO.setY(y2);
-                nodePOJO.setValue(val);
-
-                List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
-                if (nodePOJOList.size() == 0) weight2 = Float.valueOf(1/3);
+                //获取weight2
+                chessboardPOJO = chessboardBegin;
+                stringBuilder = new StringBuilder(lines.get(x2-1));
+                stringBuilder.setCharAt(y2-1, Character.forDigit(val, 10));
+                lines.set(x2-1, stringBuilder.toString());
+                chessboardPOJO.setLines(lines);
+                chessboardPOJO2 = chessboardPOJO;
+                chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
+                if (chessboardPOJOList.size() == 0) weight2 = Float.valueOf(1/3);
                 else {
-                    nodePOJO = nodePOJOList.get(0);
-                    weight2 = choiceWeight(nodeBegin, nodePOJO);
-                }
-            }
+                    NodePOJO nodePOJO = new NodePOJO();
+                    nodePOJO.setChessboardId(chessboardPOJO.getId());
+                    nodePOJO.setX(x2);
+                    nodePOJO.setY(y2);
+                    nodePOJO.setValue(val);
 
-            if (weight1 > weight2) {
-                SqlSession sqlSession1 = sqlSessionFactory.openSession();
-                chessboardPOJOList = sqlSession1.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO1);
-                if (chessboardPOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.ChessboardMapper.save", chessboardPOJO1);
-                else chessboardPOJO1 = chessboardPOJOList.get(0);
-                nodePOJO1.setChessboardId(chessboardPOJO1.getId());
-                nodePOJO1.setX(x1);nodePOJO1.setY(y1);nodePOJO1.setValue(val);
-                List<NodePOJO> nodePOJOList = sqlSession1.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO1);
-                if (nodePOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.NodeMapper.save", nodePOJO1);
-                else nodePOJO1 = nodePOJOList.get(0);
-
-                Map param = new HashMap();
-                param.put("nodeBeginId", nodeBegin.getId());
-                param.put("nodeEndId", nodePOJO1.getId());
-                List<RelationPOJO> relationPOJOList = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
-                //判断网络中节点间的关系是否存在
-                //如果不存在，创建关系
-                //先创建step，再创建relation
-                if (relationPOJOList.size() == 0){
-                    StepPOJO stepPOJO = new StepPOJO();
-                    sqlSession1.insert("team.chess.Mapper.StepMapper.save", stepPOJO);
-                    Integer stepId = stepPOJO.getId();
-                    RelationPOJO relationPOJO = new RelationPOJO();
-                    relationPOJO.setNodeBeginId(nodeBegin.getId());
-                    relationPOJO.setNodeEndId(nodePOJO1.getId());
-                    relationPOJO.setStepId(stepId);
-                    sqlSession1.insert("team.chess.Mapper.RelationMapper.save", relationPOJO);
+                    List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
+                    if (nodePOJOList.size() == 0) weight2 = Float.valueOf(1/3);
+                    else {
+                        nodePOJO = nodePOJOList.get(0);
+                        weight2 = choiceWeight(nodeBegin, nodePOJO);
+                    }
                 }
 
-                sqlSession1.commit();
-                sqlSession1.close();
-                return nodePOJO1;
-            }
-            else {
-                SqlSession sqlSession1 = sqlSessionFactory.openSession();
-                chessboardPOJOList = sqlSession1.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO2);
-                if (chessboardPOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.ChessboardMapper.save", chessboardPOJO2);
-                else chessboardPOJO2 = chessboardPOJOList.get(0);
-                nodePOJO2.setChessboardId(chessboardPOJO2.getId());
-                nodePOJO2.setX(x2);nodePOJO2.setY(y2);nodePOJO2.setValue(val);
-                List<NodePOJO> nodePOJOList = sqlSession1.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO2);
-                if (nodePOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.NodeMapper.save", nodePOJO2);
-                else nodePOJO2 = nodePOJOList.get(0);
+                if (weight1 > weight2) {
+                    SqlSession sqlSession1 = sqlSessionFactory.openSession();
+                    chessboardPOJOList = sqlSession1.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO1);
+                    if (chessboardPOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.ChessboardMapper.save", chessboardPOJO1);
+                    else chessboardPOJO1 = chessboardPOJOList.get(0);
+                    nodePOJO1.setChessboardId(chessboardPOJO1.getId());
+                    nodePOJO1.setX(x1);nodePOJO1.setY(y1);nodePOJO1.setValue(val);
+                    List<NodePOJO> nodePOJOList = sqlSession1.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO1);
+                    if (nodePOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.NodeMapper.save", nodePOJO1);
+                    else nodePOJO1 = nodePOJOList.get(0);
 
-                Map param = new HashMap();
-                param.put("nodeBeginId", nodeBegin.getId());
-                param.put("nodeEndId", nodePOJO2.getId());
-                List<RelationPOJO> relationPOJOList = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
-                //判断网络中节点间的关系是否存在
-                //如果不存在，创建关系
-                //先创建step，再创建relation
-                if (relationPOJOList.size() == 0){
-                    StepPOJO stepPOJO = new StepPOJO();
-                    sqlSession1.insert("team.chess.Mapper.StepMapper.save", stepPOJO);
-                    Integer stepId = stepPOJO.getId();
-                    RelationPOJO relationPOJO = new RelationPOJO();
-                    relationPOJO.setNodeBeginId(nodeBegin.getId());
-                    relationPOJO.setNodeEndId(nodePOJO2.getId());
-                    relationPOJO.setStepId(stepId);
-                    sqlSession1.insert("team.chess.Mapper.RelationMapper.save", relationPOJO);
+                    Map param = new HashMap();
+                    param.put("nodeBeginId", nodeBegin.getId());
+                    param.put("nodeEndId", nodePOJO1.getId());
+                    List<RelationPOJO> relationPOJOList = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
+                    //判断网络中节点间的关系是否存在
+                    //如果不存在，创建关系
+                    //先创建step，再创建relation
+                    if (relationPOJOList.size() == 0){
+                        StepPOJO stepPOJO = new StepPOJO();
+                        sqlSession1.insert("team.chess.Mapper.StepMapper.save", stepPOJO);
+                        Integer stepId = stepPOJO.getId();
+                        RelationPOJO relationPOJO = new RelationPOJO();
+                        relationPOJO.setNodeBeginId(nodeBegin.getId());
+                        relationPOJO.setNodeEndId(nodePOJO1.getId());
+                        relationPOJO.setStepId(stepId);
+                        sqlSession1.insert("team.chess.Mapper.RelationMapper.save", relationPOJO);
+                    }
+
+                    sqlSession1.commit();
+                    sqlSession1.close();
+                    return nodePOJO1;
                 }
+                else {
+                    SqlSession sqlSession1 = sqlSessionFactory.openSession();
+                    chessboardPOJOList = sqlSession1.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO2);
+                    if (chessboardPOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.ChessboardMapper.save", chessboardPOJO2);
+                    else chessboardPOJO2 = chessboardPOJOList.get(0);
+                    nodePOJO2.setChessboardId(chessboardPOJO2.getId());
+                    nodePOJO2.setX(x2);nodePOJO2.setY(y2);nodePOJO2.setValue(val);
+                    List<NodePOJO> nodePOJOList = sqlSession1.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO2);
+                    if (nodePOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.NodeMapper.save", nodePOJO2);
+                    else nodePOJO2 = nodePOJOList.get(0);
 
-                sqlSession1.commit();
-                sqlSession1.close();
-                return nodePOJO2;
+                    Map param = new HashMap();
+                    param.put("nodeBeginId", nodeBegin.getId());
+                    param.put("nodeEndId", nodePOJO2.getId());
+                    List<RelationPOJO> relationPOJOList = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
+                    //判断网络中节点间的关系是否存在
+                    //如果不存在，创建关系
+                    //先创建step，再创建relation
+                    if (relationPOJOList.size() == 0){
+                        StepPOJO stepPOJO = new StepPOJO();
+                        sqlSession1.insert("team.chess.Mapper.StepMapper.save", stepPOJO);
+                        Integer stepId = stepPOJO.getId();
+                        RelationPOJO relationPOJO = new RelationPOJO();
+                        relationPOJO.setNodeBeginId(nodeBegin.getId());
+                        relationPOJO.setNodeEndId(nodePOJO2.getId());
+                        relationPOJO.setStepId(stepId);
+                        sqlSession1.insert("team.chess.Mapper.RelationMapper.save", relationPOJO);
+                    }
+
+                    sqlSession1.commit();
+                    sqlSession1.close();
+                    return nodePOJO2;
+                }
             }
         }
-        else {
-            num = 1;
-            temp = 0;
-        }
+        num = 1;
+        temp = 0;
 
         //左斜方向，左上
         while (x-temp-2 >= 0 && y-temp-2 >= 0 && lines.get(x-temp-2).charAt(y-temp-2) == value){
             num++;
             temp++;
         }
-        x1 = x - temp;
-        y1 = y - temp;
+        x1 = x - temp - 1;
+        y1 = y - temp - 1;
         temp = 0;//右下
         while (x+temp <= 14 && y+temp <= 14 && lines.get(x+temp).charAt(y+temp) == value){
             num++;
             temp++;
         }
-        x2 = x + temp;
-        y2 = y + temp;
-        if (num == 3) {
-            //修改chessboard，查chessboard/
-            //查node/
-            //调用辅助函数/
-            //比较weight返回node，可能要new
-            Float weight1;
-            Float weight2;
-            NodePOJO nodePOJO1 = new NodePOJO();
-            NodePOJO nodePOJO2 = new NodePOJO();
-            ChessboardPOJO chessboardPOJO1;
-            ChessboardPOJO chessboardPOJO2;
+        x2 = x + temp + 1;
+        y2 = y + temp + 1;
+        if (x1 >= 1 && y1 >= 1 && x2 <= 15 && y2 <= 15 && lines.get(x1-1).charAt(y1-1) == '0' && lines.get(x2-1).charAt(y2-1) == '0') {
+            if (num == 3) {
+                //修改chessboard，查chessboard/
+                //查node/
+                //调用辅助函数/
+                //比较weight返回node，可能要new
+                Float weight1;
+                Float weight2;
+                NodePOJO nodePOJO1 = new NodePOJO();
+                NodePOJO nodePOJO2 = new NodePOJO();
+                ChessboardPOJO chessboardPOJO1;
+                ChessboardPOJO chessboardPOJO2;
 
-            //获取weight1
-            StringBuilder stringBuilder = new StringBuilder(lines.get(x1-1));
-            stringBuilder.setCharAt(y1-1, Character.forDigit(val, 10));
-            lines.set(x1-1, stringBuilder.toString());
-            chessboardPOJO.setLines(lines);
-            chessboardPOJO1 = chessboardPOJO;
-            List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
-            if (chessboardPOJOList.size() == 0) weight1 = Float.valueOf(1/3);
-            else {
-                NodePOJO nodePOJO = new NodePOJO();
-                nodePOJO.setChessboardId(chessboardPOJO.getId());
-                nodePOJO.setX(x1);
-                nodePOJO.setY(y1);
-                nodePOJO.setValue(val);
-
-                List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
-                if (nodePOJOList.size() == 0) weight1 = Float.valueOf(1/3);
+                //获取weight1
+                StringBuilder stringBuilder = new StringBuilder(lines.get(x1-1));
+                stringBuilder.setCharAt(y1-1, Character.forDigit(val, 10));
+                lines.set(x1-1, stringBuilder.toString());
+                chessboardPOJO.setLines(lines);
+                chessboardPOJO1 = chessboardPOJO;
+                List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
+                if (chessboardPOJOList.size() == 0) weight1 = Float.valueOf(1/3);
                 else {
-                    nodePOJO = nodePOJOList.get(0);
-                    weight1 = choiceWeight(nodeBegin, nodePOJO);
+                    NodePOJO nodePOJO = new NodePOJO();
+                    nodePOJO.setChessboardId(chessboardPOJO.getId());
+                    nodePOJO.setX(x1);
+                    nodePOJO.setY(y1);
+                    nodePOJO.setValue(val);
+
+                    List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
+                    if (nodePOJOList.size() == 0) weight1 = Float.valueOf(1/3);
+                    else {
+                        nodePOJO = nodePOJOList.get(0);
+                        weight1 = choiceWeight(nodeBegin, nodePOJO);
+                    }
                 }
-            }
 
-            //获取weight2
-            chessboardPOJO = chessboardBegin;
-            stringBuilder = new StringBuilder(lines.get(x2-1));
-            stringBuilder.setCharAt(y2-1, Character.forDigit(val, 10));
-            lines.set(x2-1, stringBuilder.toString());
-            chessboardPOJO.setLines(lines);
-            chessboardPOJO2 = chessboardPOJO;
-            chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
-            if (chessboardPOJOList.size() == 0) weight2 = Float.valueOf(1/3);
-            else {
-                NodePOJO nodePOJO = new NodePOJO();
-                nodePOJO.setChessboardId(chessboardPOJO.getId());
-                nodePOJO.setX(x2);
-                nodePOJO.setY(y2);
-                nodePOJO.setValue(val);
-
-                List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
-                if (nodePOJOList.size() == 0) weight2 = Float.valueOf(1/3);
+                //获取weight2
+                chessboardPOJO = chessboardBegin;
+                stringBuilder = new StringBuilder(lines.get(x2-1));
+                stringBuilder.setCharAt(y2-1, Character.forDigit(val, 10));
+                lines.set(x2-1, stringBuilder.toString());
+                chessboardPOJO.setLines(lines);
+                chessboardPOJO2 = chessboardPOJO;
+                chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
+                if (chessboardPOJOList.size() == 0) weight2 = Float.valueOf(1/3);
                 else {
-                    nodePOJO = nodePOJOList.get(0);
-                    weight2 = choiceWeight(nodeBegin, nodePOJO);
-                }
-            }
+                    NodePOJO nodePOJO = new NodePOJO();
+                    nodePOJO.setChessboardId(chessboardPOJO.getId());
+                    nodePOJO.setX(x2);
+                    nodePOJO.setY(y2);
+                    nodePOJO.setValue(val);
 
-            if (weight1 > weight2) {
-                SqlSession sqlSession1 = sqlSessionFactory.openSession();
-                chessboardPOJOList = sqlSession1.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO1);
-                if (chessboardPOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.ChessboardMapper.save", chessboardPOJO1);
-                else chessboardPOJO1 = chessboardPOJOList.get(0);
-                nodePOJO1.setChessboardId(chessboardPOJO1.getId());
-                nodePOJO1.setX(x1);nodePOJO1.setY(y1);nodePOJO1.setValue(val);
-                List<NodePOJO> nodePOJOList = sqlSession1.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO1);
-                if (nodePOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.NodeMapper.save", nodePOJO1);
-                else nodePOJO1 = nodePOJOList.get(0);
-
-                Map param = new HashMap();
-                param.put("nodeBeginId", nodeBegin.getId());
-                param.put("nodeEndId", nodePOJO1.getId());
-                List<RelationPOJO> relationPOJOList = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
-                //判断网络中节点间的关系是否存在
-                //如果不存在，创建关系
-                //先创建step，再创建relation
-                if (relationPOJOList.size() == 0){
-                    StepPOJO stepPOJO = new StepPOJO();
-                    sqlSession1.insert("team.chess.Mapper.StepMapper.save", stepPOJO);
-                    Integer stepId = stepPOJO.getId();
-                    RelationPOJO relationPOJO = new RelationPOJO();
-                    relationPOJO.setNodeBeginId(nodeBegin.getId());
-                    relationPOJO.setNodeEndId(nodePOJO1.getId());
-                    relationPOJO.setStepId(stepId);
-                    sqlSession1.insert("team.chess.Mapper.RelationMapper.save", relationPOJO);
+                    List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
+                    if (nodePOJOList.size() == 0) weight2 = Float.valueOf(1/3);
+                    else {
+                        nodePOJO = nodePOJOList.get(0);
+                        weight2 = choiceWeight(nodeBegin, nodePOJO);
+                    }
                 }
 
-                sqlSession1.commit();
-                sqlSession1.close();
-                return nodePOJO1;
-            }
-            else {
-                SqlSession sqlSession1 = sqlSessionFactory.openSession();
-                chessboardPOJOList = sqlSession1.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO2);
-                if (chessboardPOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.ChessboardMapper.save", chessboardPOJO2);
-                else chessboardPOJO2 = chessboardPOJOList.get(0);
-                nodePOJO2.setChessboardId(chessboardPOJO2.getId());
-                nodePOJO2.setX(x2);nodePOJO2.setY(y2);nodePOJO2.setValue(val);
-                List<NodePOJO> nodePOJOList = sqlSession1.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO2);
-                if (nodePOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.NodeMapper.save", nodePOJO2);
-                else nodePOJO2 = nodePOJOList.get(0);
+                if (weight1 > weight2) {
+                    SqlSession sqlSession1 = sqlSessionFactory.openSession();
+                    chessboardPOJOList = sqlSession1.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO1);
+                    if (chessboardPOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.ChessboardMapper.save", chessboardPOJO1);
+                    else chessboardPOJO1 = chessboardPOJOList.get(0);
+                    nodePOJO1.setChessboardId(chessboardPOJO1.getId());
+                    nodePOJO1.setX(x1);nodePOJO1.setY(y1);nodePOJO1.setValue(val);
+                    List<NodePOJO> nodePOJOList = sqlSession1.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO1);
+                    if (nodePOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.NodeMapper.save", nodePOJO1);
+                    else nodePOJO1 = nodePOJOList.get(0);
 
-                Map param = new HashMap();
-                param.put("nodeBeginId", nodeBegin.getId());
-                param.put("nodeEndId", nodePOJO2.getId());
-                List<RelationPOJO> relationPOJOList = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
-                //判断网络中节点间的关系是否存在
-                //如果不存在，创建关系
-                //先创建step，再创建relation
-                if (relationPOJOList.size() == 0){
-                    StepPOJO stepPOJO = new StepPOJO();
-                    sqlSession1.insert("team.chess.Mapper.StepMapper.save", stepPOJO);
-                    Integer stepId = stepPOJO.getId();
-                    RelationPOJO relationPOJO = new RelationPOJO();
-                    relationPOJO.setNodeBeginId(nodeBegin.getId());
-                    relationPOJO.setNodeEndId(nodePOJO2.getId());
-                    relationPOJO.setStepId(stepId);
-                    sqlSession1.insert("team.chess.Mapper.RelationMapper.save", relationPOJO);
+                    Map param = new HashMap();
+                    param.put("nodeBeginId", nodeBegin.getId());
+                    param.put("nodeEndId", nodePOJO1.getId());
+                    List<RelationPOJO> relationPOJOList = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
+                    //判断网络中节点间的关系是否存在
+                    //如果不存在，创建关系
+                    //先创建step，再创建relation
+                    if (relationPOJOList.size() == 0){
+                        StepPOJO stepPOJO = new StepPOJO();
+                        sqlSession1.insert("team.chess.Mapper.StepMapper.save", stepPOJO);
+                        Integer stepId = stepPOJO.getId();
+                        RelationPOJO relationPOJO = new RelationPOJO();
+                        relationPOJO.setNodeBeginId(nodeBegin.getId());
+                        relationPOJO.setNodeEndId(nodePOJO1.getId());
+                        relationPOJO.setStepId(stepId);
+                        sqlSession1.insert("team.chess.Mapper.RelationMapper.save", relationPOJO);
+                    }
+
+                    sqlSession1.commit();
+                    sqlSession1.close();
+                    return nodePOJO1;
                 }
+                else {
+                    SqlSession sqlSession1 = sqlSessionFactory.openSession();
+                    chessboardPOJOList = sqlSession1.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO2);
+                    if (chessboardPOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.ChessboardMapper.save", chessboardPOJO2);
+                    else chessboardPOJO2 = chessboardPOJOList.get(0);
+                    nodePOJO2.setChessboardId(chessboardPOJO2.getId());
+                    nodePOJO2.setX(x2);nodePOJO2.setY(y2);nodePOJO2.setValue(val);
+                    List<NodePOJO> nodePOJOList = sqlSession1.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO2);
+                    if (nodePOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.NodeMapper.save", nodePOJO2);
+                    else nodePOJO2 = nodePOJOList.get(0);
 
-                sqlSession1.commit();
-                sqlSession1.close();
-                return nodePOJO2;
+                    Map param = new HashMap();
+                    param.put("nodeBeginId", nodeBegin.getId());
+                    param.put("nodeEndId", nodePOJO2.getId());
+                    List<RelationPOJO> relationPOJOList = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
+                    //判断网络中节点间的关系是否存在
+                    //如果不存在，创建关系
+                    //先创建step，再创建relation
+                    if (relationPOJOList.size() == 0){
+                        StepPOJO stepPOJO = new StepPOJO();
+                        sqlSession1.insert("team.chess.Mapper.StepMapper.save", stepPOJO);
+                        Integer stepId = stepPOJO.getId();
+                        RelationPOJO relationPOJO = new RelationPOJO();
+                        relationPOJO.setNodeBeginId(nodeBegin.getId());
+                        relationPOJO.setNodeEndId(nodePOJO2.getId());
+                        relationPOJO.setStepId(stepId);
+                        sqlSession1.insert("team.chess.Mapper.RelationMapper.save", relationPOJO);
+                    }
+
+                    sqlSession1.commit();
+                    sqlSession1.close();
+                    return nodePOJO2;
+                }
             }
         }
-        else {
-            num = 1;
-            temp = 0;
-        }
+        num = 1;
+        temp = 0;
 
         //右斜方向，右上
         while (x-temp-2 >= 0 && y+temp <= 14 && lines.get(x-temp-2).charAt(y+temp) == value){
             num++;
             temp++;
         }
-        x1 = x - temp;
-        y1 = y + temp;
+        x1 = x - temp - 1;
+        y1 = y + temp + 1;
         temp = 0;//左下
         while (x+temp <= 14 && y-temp-2 >= 0 && lines.get(x+temp).charAt(y-temp-2) == value){
             num++;
             temp++;
         }
-        x2 = x + temp;
-        y2 = y - temp;
-        if (num == 3) {
-            //修改chessboard，查chessboard/
-            //查node/
-            //调用辅助函数/
-            //比较weight返回node，可能要new
-            Float weight1;
-            Float weight2;
-            NodePOJO nodePOJO1 = new NodePOJO();
-            NodePOJO nodePOJO2 = new NodePOJO();
-            ChessboardPOJO chessboardPOJO1;
-            ChessboardPOJO chessboardPOJO2;
+        x2 = x + temp + 1;
+        y2 = y - temp - 1;
+        if (x1 >= 1 && y <= 15 && x2 <= 15 && y2 >= 0 && lines.get(x1-1).charAt(y1-1) == '0' && lines.get(x2-1).charAt(y2-1) == '0'){
+            if (num == 3) {
+                //修改chessboard，查chessboard/
+                //查node/
+                //调用辅助函数/
+                //比较weight返回node，可能要new
+                Float weight1;
+                Float weight2;
+                NodePOJO nodePOJO1 = new NodePOJO();
+                NodePOJO nodePOJO2 = new NodePOJO();
+                ChessboardPOJO chessboardPOJO1;
+                ChessboardPOJO chessboardPOJO2;
 
-            //获取weight1
-            StringBuilder stringBuilder = new StringBuilder(lines.get(x1-1));
-            stringBuilder.setCharAt(y1-1, Character.forDigit(val, 10));
-            lines.set(x1-1, stringBuilder.toString());
-            chessboardPOJO.setLines(lines);
-            chessboardPOJO1 = chessboardPOJO;
-            List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
-            if (chessboardPOJOList.size() == 0) weight1 = Float.valueOf(1/3);
-            else {
-                NodePOJO nodePOJO = new NodePOJO();
-                nodePOJO.setChessboardId(chessboardPOJO.getId());
-                nodePOJO.setX(x1);
-                nodePOJO.setY(y1);
-                nodePOJO.setValue(val);
-
-                List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
-                if (nodePOJOList.size() == 0) weight1 = Float.valueOf(1/3);
+                //获取weight1
+                StringBuilder stringBuilder = new StringBuilder(lines.get(x1-1));
+                stringBuilder.setCharAt(y1-1, Character.forDigit(val, 10));
+                lines.set(x1-1, stringBuilder.toString());
+                chessboardPOJO.setLines(lines);
+                chessboardPOJO1 = chessboardPOJO;
+                List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
+                if (chessboardPOJOList.size() == 0) weight1 = Float.valueOf(1/3);
                 else {
-                    nodePOJO = nodePOJOList.get(0);
-                    weight1 = choiceWeight(nodeBegin, nodePOJO);
+                    NodePOJO nodePOJO = new NodePOJO();
+                    nodePOJO.setChessboardId(chessboardPOJO.getId());
+                    nodePOJO.setX(x1);
+                    nodePOJO.setY(y1);
+                    nodePOJO.setValue(val);
+
+                    List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
+                    if (nodePOJOList.size() == 0) weight1 = Float.valueOf(1/3);
+                    else {
+                        nodePOJO = nodePOJOList.get(0);
+                        weight1 = choiceWeight(nodeBegin, nodePOJO);
+                    }
                 }
-            }
 
-            //获取weight2
-            chessboardPOJO = chessboardBegin;
-            stringBuilder = new StringBuilder(lines.get(x2-1));
-            stringBuilder.setCharAt(y2-1, Character.forDigit(val, 10));
-            lines.set(x2-1, stringBuilder.toString());
-            chessboardPOJO.setLines(lines);
-            chessboardPOJO2 = chessboardPOJO;
-            chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
-            if (chessboardPOJOList.size() == 0) weight2 = Float.valueOf(1/3);
-            else {
-                NodePOJO nodePOJO = new NodePOJO();
-                nodePOJO.setChessboardId(chessboardPOJO.getId());
-                nodePOJO.setX(x2);
-                nodePOJO.setY(y2);
-                nodePOJO.setValue(val);
-
-                List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
-                if (nodePOJOList.size() == 0) weight2 = Float.valueOf(1/3);
+                //获取weight2
+                chessboardPOJO = chessboardBegin;
+                stringBuilder = new StringBuilder(lines.get(x2-1));
+                stringBuilder.setCharAt(y2-1, Character.forDigit(val, 10));
+                lines.set(x2-1, stringBuilder.toString());
+                chessboardPOJO.setLines(lines);
+                chessboardPOJO2 = chessboardPOJO;
+                chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO);
+                if (chessboardPOJOList.size() == 0) weight2 = Float.valueOf(1/3);
                 else {
-                    nodePOJO = nodePOJOList.get(0);
-                    weight2 = choiceWeight(nodeBegin, nodePOJO);
-                }
-            }
+                    NodePOJO nodePOJO = new NodePOJO();
+                    nodePOJO.setChessboardId(chessboardPOJO.getId());
+                    nodePOJO.setX(x2);
+                    nodePOJO.setY(y2);
+                    nodePOJO.setValue(val);
 
-            if (weight1 > weight2) {
-                SqlSession sqlSession1 = sqlSessionFactory.openSession();
-                chessboardPOJOList = sqlSession1.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO1);
-                if (chessboardPOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.ChessboardMapper.save", chessboardPOJO1);
-                else chessboardPOJO1 = chessboardPOJOList.get(0);
-                nodePOJO1.setChessboardId(chessboardPOJO1.getId());
-                nodePOJO1.setX(x1);nodePOJO1.setY(y1);nodePOJO1.setValue(val);
-                List<NodePOJO> nodePOJOList = sqlSession1.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO1);
-                if (nodePOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.NodeMapper.save", nodePOJO1);
-                else nodePOJO1 = nodePOJOList.get(0);
-
-                Map param = new HashMap();
-                param.put("nodeBeginId", nodeBegin.getId());
-                param.put("nodeEndId", nodePOJO1.getId());
-                List<RelationPOJO> relationPOJOList = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
-                //判断网络中节点间的关系是否存在
-                //如果不存在，创建关系
-                //先创建step，再创建relation
-                if (relationPOJOList.size() == 0){
-                    StepPOJO stepPOJO = new StepPOJO();
-                    sqlSession1.insert("team.chess.Mapper.StepMapper.save", stepPOJO);
-                    Integer stepId = stepPOJO.getId();
-                    RelationPOJO relationPOJO = new RelationPOJO();
-                    relationPOJO.setNodeBeginId(nodeBegin.getId());
-                    relationPOJO.setNodeEndId(nodePOJO1.getId());
-                    relationPOJO.setStepId(stepId);
-                    sqlSession1.insert("team.chess.Mapper.RelationMapper.save", relationPOJO);
+                    List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
+                    if (nodePOJOList.size() == 0) weight2 = Float.valueOf(1/3);
+                    else {
+                        nodePOJO = nodePOJOList.get(0);
+                        weight2 = choiceWeight(nodeBegin, nodePOJO);
+                    }
                 }
 
-                sqlSession1.commit();
-                sqlSession1.close();
-                return nodePOJO1;
-            }
-            else {
-                SqlSession sqlSession1 = sqlSessionFactory.openSession();
-                chessboardPOJOList = sqlSession1.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO2);
-                if (chessboardPOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.ChessboardMapper.save", chessboardPOJO2);
-                else chessboardPOJO2 = chessboardPOJOList.get(0);
-                nodePOJO2.setChessboardId(chessboardPOJO2.getId());
-                nodePOJO2.setX(x2);nodePOJO2.setY(y2);nodePOJO2.setValue(val);
-                List<NodePOJO> nodePOJOList = sqlSession1.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO2);
-                if (nodePOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.NodeMapper.save", nodePOJO2);
-                else nodePOJO2 = nodePOJOList.get(0);
+                if (weight1 > weight2) {
+                    SqlSession sqlSession1 = sqlSessionFactory.openSession();
+                    chessboardPOJOList = sqlSession1.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO1);
+                    if (chessboardPOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.ChessboardMapper.save", chessboardPOJO1);
+                    else chessboardPOJO1 = chessboardPOJOList.get(0);
+                    nodePOJO1.setChessboardId(chessboardPOJO1.getId());
+                    nodePOJO1.setX(x1);nodePOJO1.setY(y1);nodePOJO1.setValue(val);
+                    List<NodePOJO> nodePOJOList = sqlSession1.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO1);
+                    if (nodePOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.NodeMapper.save", nodePOJO1);
+                    else nodePOJO1 = nodePOJOList.get(0);
 
-                Map param = new HashMap();
-                param.put("nodeBeginId", nodeBegin.getId());
-                param.put("nodeEndId", nodePOJO2.getId());
-                List<RelationPOJO> relationPOJOList = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
-                //判断网络中节点间的关系是否存在
-                //如果不存在，创建关系
-                //先创建step，再创建relation
-                if (relationPOJOList.size() == 0){
-                    StepPOJO stepPOJO = new StepPOJO();
-                    sqlSession1.insert("team.chess.Mapper.StepMapper.save", stepPOJO);
-                    Integer stepId = stepPOJO.getId();
-                    RelationPOJO relationPOJO = new RelationPOJO();
-                    relationPOJO.setNodeBeginId(nodeBegin.getId());
-                    relationPOJO.setNodeEndId(nodePOJO2.getId());
-                    relationPOJO.setStepId(stepId);
-                    sqlSession1.insert("team.chess.Mapper.RelationMapper.save", relationPOJO);
+                    Map param = new HashMap();
+                    param.put("nodeBeginId", nodeBegin.getId());
+                    param.put("nodeEndId", nodePOJO1.getId());
+                    List<RelationPOJO> relationPOJOList = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
+                    //判断网络中节点间的关系是否存在
+                    //如果不存在，创建关系
+                    //先创建step，再创建relation
+                    if (relationPOJOList.size() == 0){
+                        StepPOJO stepPOJO = new StepPOJO();
+                        sqlSession1.insert("team.chess.Mapper.StepMapper.save", stepPOJO);
+                        Integer stepId = stepPOJO.getId();
+                        RelationPOJO relationPOJO = new RelationPOJO();
+                        relationPOJO.setNodeBeginId(nodeBegin.getId());
+                        relationPOJO.setNodeEndId(nodePOJO1.getId());
+                        relationPOJO.setStepId(stepId);
+                        sqlSession1.insert("team.chess.Mapper.RelationMapper.save", relationPOJO);
+                    }
+
+                    sqlSession1.commit();
+                    sqlSession1.close();
+                    return nodePOJO1;
                 }
+                else {
+                    SqlSession sqlSession1 = sqlSessionFactory.openSession();
+                    chessboardPOJOList = sqlSession1.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardPOJO2);
+                    if (chessboardPOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.ChessboardMapper.save", chessboardPOJO2);
+                    else chessboardPOJO2 = chessboardPOJOList.get(0);
+                    nodePOJO2.setChessboardId(chessboardPOJO2.getId());
+                    nodePOJO2.setX(x2);nodePOJO2.setY(y2);nodePOJO2.setValue(val);
+                    List<NodePOJO> nodePOJOList = sqlSession1.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO2);
+                    if (nodePOJOList.size() == 0) sqlSession1.insert("team.chess.Mapper.NodeMapper.save", nodePOJO2);
+                    else nodePOJO2 = nodePOJOList.get(0);
 
-                sqlSession1.commit();
-                sqlSession1.close();
-                return nodePOJO2;
+                    Map param = new HashMap();
+                    param.put("nodeBeginId", nodeBegin.getId());
+                    param.put("nodeEndId", nodePOJO2.getId());
+                    List<RelationPOJO> relationPOJOList = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
+                    //判断网络中节点间的关系是否存在
+                    //如果不存在，创建关系
+                    //先创建step，再创建relation
+                    if (relationPOJOList.size() == 0){
+                        StepPOJO stepPOJO = new StepPOJO();
+                        sqlSession1.insert("team.chess.Mapper.StepMapper.save", stepPOJO);
+                        Integer stepId = stepPOJO.getId();
+                        RelationPOJO relationPOJO = new RelationPOJO();
+                        relationPOJO.setNodeBeginId(nodeBegin.getId());
+                        relationPOJO.setNodeEndId(nodePOJO2.getId());
+                        relationPOJO.setStepId(stepId);
+                        sqlSession1.insert("team.chess.Mapper.RelationMapper.save", relationPOJO);
+                    }
+
+                    sqlSession1.commit();
+                    sqlSession1.close();
+                    return nodePOJO2;
+                }
             }
         }
 
@@ -1044,7 +1046,10 @@ public class DecideMan {
         Integer nodeBeginId = nodeBegin.getId();
         Integer nodeBeginValue = nodeBegin.getValue();
 
-        List<RelationPOJO> relationPOJOS = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryList", nodeBeginId);
+        Map param = new HashMap();
+        param.put("nodeBeginId", nodeBeginId);
+
+        List<RelationPOJO> relationPOJOS = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
 
         StepPOJO stepDecide = new StepPOJO();
         RelationPOJO relationDecide = new RelationPOJO();
@@ -1091,14 +1096,14 @@ public class DecideMan {
         List<String> lines = chessboardPOJO.getLines();
         Integer x = nodeBegin.getX();
         Integer y = nodeBegin.getY();
-        if (x-2 >= 0 && y-2 >= 0 && lines.get(x-2).charAt(y-2) != '0') total++;
-        if (y-2 >= 0 && lines.get(x-1).charAt(y-2) != '0') total++;
-        if (x <= 14 && y-2 >=0 && lines.get(x).charAt(y-2) != '0') total++;
-        if (x-2 >= 0 && lines.get(x-2).charAt(y-1) != '0') total++;
-        if (x <= 14 && lines.get(x).charAt(y-1) != '0') total++;
-        if (x-2 >= 0 && y <= 14 && lines.get(x-2).charAt(y) != '0') total++;
-        if (y <= 14 && lines.get(x-1).charAt(y) != '0') total++;
-        if (x <= 14 && y <= 14 && lines.get(x).charAt(x) != '0') total++;
+        if (x-2 >= 0 && y-2 >= 0 && lines.get(x-2).charAt(y-2) == '0') total++;
+        if (y-2 >= 0 && lines.get(x-1).charAt(y-2) == '0') total++;
+        if (x <= 14 && y-2 >=0 && lines.get(x).charAt(y-2) == '0') total++;
+        if (x-2 >= 0 && lines.get(x-2).charAt(y-1) == '0') total++;
+        if (x <= 14 && lines.get(x).charAt(y-1) == '0') total++;
+        if (x-2 >= 0 && y <= 14 && lines.get(x-2).charAt(y) == '0') total++;
+        if (y <= 14 && lines.get(x-1).charAt(y) == '0') total++;
+        if (x <= 14 && y <= 14 && lines.get(x).charAt(x) == '0') total++;
 
         //获取known
         Integer known = 0;
@@ -1130,7 +1135,7 @@ public class DecideMan {
         Integer y = nodeBegin.getY();
         Integer value = nodeBegin.getValue();
         Integer val = (value == 1) ? 2 : 1;
-        Integer total = 0;
+        Integer total = 1;
         Integer result = 0;
 
         if (x-2 >= 0 && y-2 >= 0 && lines.get(x-2).charAt(y-2) == '0') {
@@ -1141,9 +1146,11 @@ public class DecideMan {
             List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardBegin);
             //判断网路中是否有该棋盘记录
             //如果不存在返回total = 1
-            if (chessboardPOJOList.size() == 0 && total >= 1) {
-                total = 1;
-                result = 1;
+            if (chessboardPOJOList.size() == 0) {
+                if (total >= 1) {
+                    total = 1;
+                    result = 1;
+                }
             }
             else {
                 chessboardBegin = chessboardPOJOList.get(0);
@@ -1158,9 +1165,11 @@ public class DecideMan {
                 List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
                 //判断网络中节点是否存在
                 //如果不存在，返回total = 1
-                if (nodePOJOList.size() == 0 && total >= 1) {
-                    total = 1;
-                    result = 1;
+                if (nodePOJOList.size() == 0) {
+                    if (total >= 1){
+                        total = 1;
+                        result = 1;
+                    }
                 }
                 else {
                     nodePOJO = nodePOJOList.get(0);
@@ -1180,9 +1189,11 @@ public class DecideMan {
             List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardBegin);
             //判断网路中是否有该棋盘记录
             //如果不存在返回total = 1
-            if (chessboardPOJOList.size() == 0 && total >= 1) {
-                total = 1;
-                result = 2;
+            if (chessboardPOJOList.size() == 0) {
+                if (total >= 1){
+                    total = 1;
+                    result = 2;
+                }
             }
             else {
                 chessboardBegin = chessboardPOJOList.get(0);
@@ -1197,9 +1208,11 @@ public class DecideMan {
                 List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
                 //判断网络中节点是否存在
                 //如果不存在，返回total = 1
-                if (nodePOJOList.size() == 0 && total >= 1) {
-                    total = 1;
-                    result = 2;
+                if (nodePOJOList.size() == 0) {
+                    if (total >= 1){
+                        total = 1;
+                        result = 2;
+                    }
                 }
                 else {
                     nodePOJO = nodePOJOList.get(0);
@@ -1219,9 +1232,11 @@ public class DecideMan {
             List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardBegin);
             //判断网路中是否有该棋盘记录
             //如果不存在返回total = 1
-            if (chessboardPOJOList.size() == 0 && total >= 1) {
-                total = 1;
-                result = 3;
+            if (chessboardPOJOList.size() == 0) {
+                if (total >= 1) {
+                    total = 1;
+                    result = 3;
+                }
             }
             else {
                 chessboardBegin = chessboardPOJOList.get(0);
@@ -1236,9 +1251,11 @@ public class DecideMan {
                 List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
                 //判断网络中节点是否存在
                 //如果不存在，返回total = 1
-                if (nodePOJOList.size() == 0 && total >= 1) {
-                    total = 1;
-                    result = 3;
+                if (nodePOJOList.size() == 0) {
+                    if (total >= 1){
+                        total = 1;
+                        result = 3;
+                    }
                 }
                 else {
                     nodePOJO = nodePOJOList.get(0);
@@ -1258,9 +1275,11 @@ public class DecideMan {
             List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardBegin);
             //判断网路中是否有该棋盘记录
             //如果不存在返回total = 1
-            if (chessboardPOJOList.size() == 0 && total >= 1) {
-                total = 1;
-                result = 4;
+            if (chessboardPOJOList.size() == 0) {
+                if (total >= 1){
+                    total = 1;
+                    result = 4;
+                }
             }
             else {
                 chessboardBegin = chessboardPOJOList.get(0);
@@ -1275,9 +1294,11 @@ public class DecideMan {
                 List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
                 //判断网络中节点是否存在
                 //如果不存在，返回total = 1
-                if (nodePOJOList.size() == 0 && total >= 1) {
-                    total = 1;
-                    result = 4;
+                if (nodePOJOList.size() == 0) {
+                    if (total >= 1) {
+                        total = 1;
+                        result = 4;
+                    }
                 }
                 else {
                     nodePOJO = nodePOJOList.get(0);
@@ -1297,9 +1318,11 @@ public class DecideMan {
             List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardBegin);
             //判断网路中是否有该棋盘记录
             //如果不存在返回total = 1
-            if (chessboardPOJOList.size() == 0 && total >= 1) {
-                total = 1;
-                result = 5;
+            if (chessboardPOJOList.size() == 0) {
+                if (total >= 1) {
+                    total = 1;
+                    result = 5;
+                }
             }
             else {
                 chessboardBegin = chessboardPOJOList.get(0);
@@ -1314,9 +1337,11 @@ public class DecideMan {
                 List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
                 //判断网络中节点是否存在
                 //如果不存在，返回total = 1
-                if (nodePOJOList.size() == 0 && total >= 1) {
-                    total = 1;
-                    result = 5;
+                if (nodePOJOList.size() == 0) {
+                    if (total >= 1){
+                        total = 1;
+                        result = 5;
+                    }
                 }
                 else {
                     nodePOJO = nodePOJOList.get(0);
@@ -1336,9 +1361,11 @@ public class DecideMan {
             List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardBegin);
             //判断网路中是否有该棋盘记录
             //如果不存在返回total = 1
-            if (chessboardPOJOList.size() == 0 && total >= 1) {
-                total = 1;
-                result = 6;
+            if (chessboardPOJOList.size() == 0) {
+                if (total >= 1) {
+                    total = 1;
+                    result = 6;
+                }
             }
             else {
                 chessboardBegin = chessboardPOJOList.get(0);
@@ -1353,9 +1380,11 @@ public class DecideMan {
                 List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
                 //判断网络中节点是否存在
                 //如果不存在，返回total = 1
-                if (nodePOJOList.size() == 0 && total >= 1) {
-                    total = 1;
-                    result = 6;
+                if (nodePOJOList.size() == 0) {
+                    if (total >= 1) {
+                        total = 1;
+                        result = 6;
+                    }
                 }
                 else {
                     nodePOJO = nodePOJOList.get(0);
@@ -1375,9 +1404,11 @@ public class DecideMan {
             List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardBegin);
             //判断网路中是否有该棋盘记录
             //如果不存在返回total = 1
-            if (chessboardPOJOList.size() == 0 && total >= 1) {
-                total = 1;
-                result = 7;
+            if (chessboardPOJOList.size() == 0) {
+                if (total >= 1) {
+                    total = 1;
+                    result = 7;
+                }
             }
             else {
                 chessboardBegin = chessboardPOJOList.get(0);
@@ -1392,9 +1423,11 @@ public class DecideMan {
                 List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
                 //判断网络中节点是否存在
                 //如果不存在，返回total = 1
-                if (nodePOJOList.size() == 0 && total >= 1) {
-                    total = 1;
-                    result = 7;
+                if (nodePOJOList.size() == 0) {
+                    if (total >= 1){
+                        total = 1;
+                        result = 7;
+                    }
                 }
                 else {
                     nodePOJO = nodePOJOList.get(0);
@@ -1414,8 +1447,8 @@ public class DecideMan {
             List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardBegin);
             //判断网路中是否有该棋盘记录
             //如果不存在返回total = 1
-            if (chessboardPOJOList.size() == 0 && total >= 1) {
-                result = 8;
+            if (chessboardPOJOList.size() == 0) {
+                if (total >= 1) result = 8;
             }
             else {
                 chessboardBegin = chessboardPOJOList.get(0);
@@ -1430,8 +1463,8 @@ public class DecideMan {
                 List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
                 //判断网络中节点是否存在
                 //如果不存在，返回total = 1
-                if (nodePOJOList.size() == 0 && total >= 1) {
-                    result = 8;
+                if (nodePOJOList.size() == 0) {
+                    if (total >= 1) result = 8;
                 }
                 else {
                     nodePOJO = nodePOJOList.get(0);
