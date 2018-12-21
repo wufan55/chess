@@ -80,6 +80,11 @@ public class MainLoop {
 
                 beginNode = endNode;
                 endNode = decideMan.Decide(beginNode);
+                if (endNode == null) {
+                    recordMan.UpdateRecord(2);
+                    System.out.println(humVal + " " + "win");
+                    break;
+                }
                 System.out.println("computerX: " + endNode.getX());
                 System.out.println("computerY: " + endNode.getY());
                 System.out.println("computerValue: " + comVal);
@@ -127,6 +132,11 @@ public class MainLoop {
             JudgeMan judgeMan = new JudgeMan();
             while (true) {
                 NodePOJO endNode = decideMan.Decide(beginNode);
+                if (endNode == null){
+                    recordMan.UpdateRecord(1);
+                    System.out.println(humVal + " " + "win");
+                    break;
+                }
                 System.out.println("computerX: " + endNode.getX());
                 System.out.println("computerY: " + endNode.getY());
                 System.out.println("computerValue: " + comVal);
@@ -208,6 +218,11 @@ public class MainLoop {
             RecordMan recordMan = new RecordMan();
             while (true){
                 NodePOJO endNode = decideMan.Decide(beginNode);
+                if (endNode == null){
+                    recordMan.UpdateRecord(1);
+                    System.out.println(comVal1 + " " + "win");
+                    break;
+                }
                 recordMan.Record(beginNode, endNode);
                 result = judgeMan.Judge(endNode);
                 if (result == true) {
@@ -217,6 +232,11 @@ public class MainLoop {
                 }
                 beginNode = endNode;
                 endNode = decideMan.Decide(beginNode);
+                if (endNode == null){
+                    recordMan.UpdateRecord(2);
+                    System.out.println(comVal2 + " " + "win");
+                    break;
+                }
                 recordMan.Record(beginNode, endNode);
                 result = judgeMan.Judge(endNode);
                 if (result == true) {

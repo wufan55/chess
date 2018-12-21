@@ -598,6 +598,7 @@ public class DecideMan {
                         return nodePOJO2;
                     }
                 }
+                if (num == 4) return null;
             }
             else if (currLine.charAt(y1-1) == '0') {
                 if (num == 4) {
@@ -852,6 +853,7 @@ public class DecideMan {
                         return nodePOJO2;
                     }
                 }
+                if (num == 4) return null;
             }
             else if (lines.get(x1-1).charAt(y1-1) == '0') {
                 if (num == 4) {
@@ -1107,6 +1109,7 @@ public class DecideMan {
                         return nodePOJO2;
                     }
                 }
+                if (num == 4) return null;
             }
             else if (lines.get(x1-1).charAt(y1-1) == '0') {
                 if (num == 4) {
@@ -1361,6 +1364,7 @@ public class DecideMan {
                         return nodePOJO2;
                     }
                 }
+                if (num == 4) return null;
             }
             else if (lines.get(x1-1).charAt(y1-1) == '0') {
                 if (num == 4) {
