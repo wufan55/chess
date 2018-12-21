@@ -209,6 +209,7 @@ public class MainLoop {
         String comVal2 = "white";
 
         NodePOJO beginNode = rootNodePOJO;
+        NodePOJO endNode;
         boolean result;
         Integer i = 0;
         //循环一次
@@ -217,7 +218,7 @@ public class MainLoop {
             JudgeMan judgeMan = new JudgeMan();
             RecordMan recordMan = new RecordMan();
             while (true){
-                NodePOJO endNode = decideMan.Decide(beginNode);
+                endNode = decideMan.Decide(beginNode);
                 if (endNode == null){
                     recordMan.UpdateRecord(1);
                     System.out.println(comVal1 + " " + "win");
@@ -244,6 +245,7 @@ public class MainLoop {
                     System.out.println("black win");
                     break;
                 }
+                beginNode = endNode;
             }
             i++;
         }
@@ -252,6 +254,6 @@ public class MainLoop {
     }
 
     public static void main(String[] args) throws IOException {
-        SecondHand();
+        OnesOwn();
     }
 }

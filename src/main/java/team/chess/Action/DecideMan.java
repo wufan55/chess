@@ -1235,7 +1235,7 @@ public class DecideMan {
         }
         x2 = x + temp + 1;
         y2 = y - temp - 1;
-        if (x1 >= 1 && y <= 15 && x2 <= 15 && y2 >= 0){
+        if (x1 >= 1 && y1 <= 15 && x2 <= 15 && y2 >= 0){
             if (lines.get(x1-1).charAt(y1-1) == '0' && lines.get(x2-1).charAt(y2-1) == '0') {
                 if (num == 3) {
                     //修改chessboard，查chessboard/
@@ -1565,6 +1565,7 @@ public class DecideMan {
     }
 
     //循环次数分析
+    //result不随机
     public Integer totalTime(NodePOJO nodeBegin) throws IOException {
         SqlSessionFactory sqlSessionFactory = sqlUtil.getSqlSessionFactory();
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -1607,7 +1608,7 @@ public class DecideMan {
                 //判断网络中节点是否存在
                 //如果不存在，返回total = 1
                 if (nodePOJOList.size() == 0) {
-                    if (total >= 1){
+                    if (total > 1){
                         total = 1;
                         result = 1;
                     }
