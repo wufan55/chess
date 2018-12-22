@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2b6c34d6-f514-4b01-a345-0c8509c6e80f" name="Default Changelist" comment="7">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/chess/team/chess/Action/DecideMan.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/chess/team/chess/Action/DecideMan.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/chess/team/chess/Action/JudgeMan.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/chess/team/chess/Action/JudgeMan.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/chess/team/chess/MainLoop.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/chess/team/chess/MainLoop.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/team/chess/Action/DecideMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/team/chess/Action/DecideMan.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/team/chess/MainLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/team/chess/MainLoop.java" afterDir="false" />
     </list>
@@ -21,24 +18,24 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/Action/DecideMan.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="178">
-              <caret line="1567" column="15" selection-start-line="1567" selection-start-column="15" selection-end-line="1567" selection-end-column="15" />
+            <state relative-caret-position="383">
+              <caret line="1842" column="42" selection-start-line="1842" selection-start-column="42" selection-end-line="1842" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#846#23061#1" />
                 <element signature="e#968#1104#1" />
+                <element signature="e#1797#4400#1" />
+                <element signature="e#4448#7049#1" />
+                <element signature="e#7097#9696#1" />
+                <element signature="e#9744#12345#1" />
+                <element signature="e#12393#14990#1" />
+                <element signature="e#15038#17639#1" />
+                <element signature="e#17687#20286#1" />
+                <element signature="e#20334#22931#1" />
                 <element signature="method#threeStopUp#0;class#DecideMan#0" />
                 <element signature="e#24482#32166#1" />
                 <element signature="e#29931#32148#1" />
                 <element signature="method#weightDecide#0;class#DecideMan#0" />
                 <element signature="method#filledLevel#0;class#DecideMan#0" />
-                <element signature="e#86715#88409#1" />
-                <element signature="e#88477#90170#1" />
-                <element signature="e#90230#91925#1" />
-                <element signature="e#91982#93673#1" />
-                <element signature="e#93742#95438#1" />
-                <element signature="e#95495#97188#1" />
-                <element signature="e#97254#98754#1" />
                 <element signature="method#getTotal#0;class#DecideMan#0" />
                 <element signature="method#getWinTime#0;class#DecideMan#0" />
                 <element signature="method#choiceWeight#0;class#DecideMan#0" />
@@ -50,11 +47,23 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/MainLoop.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-82">
-              <caret line="227" selection-start-line="227" selection-end-line="227" />
+            <state relative-caret-position="123">
+              <caret line="230" column="48" selection-start-line="230" selection-start-column="48" selection-end-line="230" selection-end-column="48" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#FirstHand#0;class#MainLoop#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/Action/RecordMan.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="122">
+              <caret line="37" column="16" selection-start-line="37" selection-start-column="16" selection-end-line="37" selection-end-column="16" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -104,8 +113,8 @@
         <option value="$PROJECT_DIR$/src/main/java/team/chess/Action/testAction.java" />
         <option value="$PROJECT_DIR$/src/main/java/team/chess/POJO/RelationPOJO.java" />
         <option value="$PROJECT_DIR$/src/main/java/team/chess/Action/RecordMan.java" />
-        <option value="$PROJECT_DIR$/src/main/java/team/chess/MainLoop.java" />
         <option value="$PROJECT_DIR$/src/main/java/team/chess/Action/JudgeMan.java" />
+        <option value="$PROJECT_DIR$/src/main/java/team/chess/MainLoop.java" />
         <option value="$PROJECT_DIR$/src/main/java/team/chess/Action/DecideMan.java" />
       </list>
     </option>
@@ -129,7 +138,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -187,6 +195,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -289,18 +298,19 @@
       <workItem from="1545276546471" duration="94000" />
       <workItem from="1545277485793" duration="14719000" />
       <workItem from="1545355433574" duration="4160000" />
-      <workItem from="1545391429626" duration="3226000" />
+      <workItem from="1545391429626" duration="3277000" />
+      <workItem from="1545442912372" duration="2841000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="96866000" />
+    <option name="totallyTimeSpent" value="99758000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="807" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25107297" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2546495" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -309,7 +319,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32867134" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32867134" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32867134" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -485,7 +495,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/Action/RecordMan.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-26">
+        <state relative-caret-position="122">
           <caret line="37" column="16" selection-start-line="37" selection-start-column="16" selection-end-line="37" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -495,8 +505,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/MainLoop.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-82">
-          <caret line="227" selection-start-line="227" selection-end-line="227" />
+        <state relative-caret-position="123">
+          <caret line="230" column="48" selection-start-line="230" selection-start-column="48" selection-end-line="230" selection-end-column="48" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#FirstHand#0;class#MainLoop#0" />
@@ -506,24 +516,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/Action/DecideMan.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="1567" column="15" selection-start-line="1567" selection-start-column="15" selection-end-line="1567" selection-end-column="15" />
+        <state relative-caret-position="383">
+          <caret line="1842" column="42" selection-start-line="1842" selection-start-column="42" selection-end-line="1842" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#846#23061#1" />
             <element signature="e#968#1104#1" />
+            <element signature="e#1797#4400#1" />
+            <element signature="e#4448#7049#1" />
+            <element signature="e#7097#9696#1" />
+            <element signature="e#9744#12345#1" />
+            <element signature="e#12393#14990#1" />
+            <element signature="e#15038#17639#1" />
+            <element signature="e#17687#20286#1" />
+            <element signature="e#20334#22931#1" />
             <element signature="method#threeStopUp#0;class#DecideMan#0" />
             <element signature="e#24482#32166#1" />
             <element signature="e#29931#32148#1" />
             <element signature="method#weightDecide#0;class#DecideMan#0" />
             <element signature="method#filledLevel#0;class#DecideMan#0" />
-            <element signature="e#86715#88409#1" />
-            <element signature="e#88477#90170#1" />
-            <element signature="e#90230#91925#1" />
-            <element signature="e#91982#93673#1" />
-            <element signature="e#93742#95438#1" />
-            <element signature="e#95495#97188#1" />
-            <element signature="e#97254#98754#1" />
             <element signature="method#getTotal#0;class#DecideMan#0" />
             <element signature="method#getWinTime#0;class#DecideMan#0" />
             <element signature="method#choiceWeight#0;class#DecideMan#0" />

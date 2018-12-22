@@ -7,10 +7,14 @@ import team.chess.Action.JudgeMan;
 import team.chess.Action.RecordMan;
 import team.chess.POJO.ChessboardPOJO;
 import team.chess.POJO.NodePOJO;
+import team.chess.POJO.RelationPOJO;
+import team.chess.POJO.StepPOJO;
 import team.chess.Util.SqlUtil;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class MainLoop {
@@ -224,6 +228,20 @@ public class MainLoop {
                     System.out.println(comVal1 + " " + "win");
                     break;
                 }
+                //获取最近的begin进行decide,解决周围都有子堵死情况
+                NodePOJO temp;
+                while (endNode.getValue() == null) {
+                    List<StepPOJO> stepPOJOList = recordMan.getStepPOJOS();
+                    Integer stepListSize = stepPOJOList.size();
+                    StepPOJO stepPOJO = stepPOJOList.get(stepListSize-2);
+                    Map param = new HashMap();
+                    param.put("stepId", stepPOJO.getId());
+                    List<RelationPOJO> relationPOJOS = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
+                    RelationPOJO relationPOJO = relationPOJOS.get(0);
+                    Integer beginId = relationPOJO.getNodeBeginId();
+                    temp = sqlSession.selectOne("team.chess.Mapper.NodeMapper.queryObject", beginId);
+                    endNode = decideMan.Decide(temp);
+                }
                 recordMan.Record(beginNode, endNode);
                 result = judgeMan.Judge(endNode);
                 if (result == true) {
@@ -237,6 +255,18 @@ public class MainLoop {
                     recordMan.UpdateRecord(2);
                     System.out.println(comVal2 + " " + "win");
                     break;
+                }
+                while (endNode.getValue() == null) {
+                    List<StepPOJO> stepPOJOList = recordMan.getStepPOJOS();
+                    Integer stepListSize = stepPOJOList.size();
+                    StepPOJO stepPOJO = stepPOJOList.get(stepListSize-2);
+                    Map param = new HashMap();
+                    param.put("stepId", stepPOJO.getId());
+                    List<RelationPOJO> relationPOJOS = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
+                    RelationPOJO relationPOJO = relationPOJOS.get(0);
+                    Integer beginId = relationPOJO.getNodeBeginId();
+                    temp = sqlSession.selectOne("team.chess.Mapper.NodeMapper.queryObject", beginId);
+                    endNode = decideMan.Decide(temp);
                 }
                 recordMan.Record(beginNode, endNode);
                 result = judgeMan.Judge(endNode);

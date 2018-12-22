@@ -9,6 +9,7 @@ import team.chess.POJO.StepPOJO;
 import team.chess.Util.SqlUtil;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1566,6 +1567,7 @@ public class DecideMan {
 
     //循环次数分析
     //result不随机
+    //增加随机
     public Integer totalTime(NodePOJO nodeBegin) throws IOException {
         SqlSessionFactory sqlSessionFactory = sqlUtil.getSqlSessionFactory();
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -1579,6 +1581,15 @@ public class DecideMan {
         Integer val = (value == 1) ? 2 : 1;
         Integer total = 1;
         Integer result = 0;
+        Integer total1 = 0;
+        Integer total2 = 0;
+        Integer total3 = 0;
+        Integer total4 = 0;
+        Integer total5 = 0;
+        Integer total6 = 0;
+        Integer total7 = 0;
+        Integer total8 = 0;
+        List<Integer> totalResult = new ArrayList<>();
 
         if (x-2 >= 0 && y-2 >= 0 && lines.get(x-2).charAt(y-2) == '0') {
             StringBuilder stringBuilder = new StringBuilder(lines.get(x-2));
@@ -1588,12 +1599,7 @@ public class DecideMan {
             List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardBegin);
             //判断网路中是否有该棋盘记录
             //如果不存在返回total = 1
-            if (chessboardPOJOList.size() == 0) {
-                if (total >= 1) {
-                    total = 1;
-                    result = 1;
-                }
-            }
+            if (chessboardPOJOList.size() == 0) total1 = 1;
             else {
                 chessboardBegin = chessboardPOJOList.get(0);
 
@@ -1607,19 +1613,11 @@ public class DecideMan {
                 List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
                 //判断网络中节点是否存在
                 //如果不存在，返回total = 1
-                if (nodePOJOList.size() == 0) {
-                    if (total > 1){
-                        total = 1;
-                        result = 1;
-                    }
-                }
+                if (nodePOJOList.size() == 0) total1 = 1;
                 else {
                     nodePOJO = nodePOJOList.get(0);
                     Integer temp = getTotal(nodeBegin, nodePOJO);
-                    if (total >= temp) {
-                        total = temp;
-                        result = 1;
-                    }
+                    total1 = temp;
                 }
             }
         }
@@ -1631,12 +1629,7 @@ public class DecideMan {
             List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardBegin);
             //判断网路中是否有该棋盘记录
             //如果不存在返回total = 1
-            if (chessboardPOJOList.size() == 0) {
-                if (total >= 1){
-                    total = 1;
-                    result = 2;
-                }
-            }
+            if (chessboardPOJOList.size() == 0) total2 = 1;
             else {
                 chessboardBegin = chessboardPOJOList.get(0);
 
@@ -1650,19 +1643,11 @@ public class DecideMan {
                 List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
                 //判断网络中节点是否存在
                 //如果不存在，返回total = 1
-                if (nodePOJOList.size() == 0) {
-                    if (total >= 1){
-                        total = 1;
-                        result = 2;
-                    }
-                }
+                if (nodePOJOList.size() == 0) total2 = 1;
                 else {
                     nodePOJO = nodePOJOList.get(0);
                     Integer temp = getTotal(nodeBegin, nodePOJO);
-                    if (total >= temp) {
-                        total = temp;
-                        result = 2;
-                    }
+                    total2 = temp;
                 }
             }
         }
@@ -1674,12 +1659,7 @@ public class DecideMan {
             List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardBegin);
             //判断网路中是否有该棋盘记录
             //如果不存在返回total = 1
-            if (chessboardPOJOList.size() == 0) {
-                if (total >= 1) {
-                    total = 1;
-                    result = 3;
-                }
-            }
+            if (chessboardPOJOList.size() == 0) total3 = 1;
             else {
                 chessboardBegin = chessboardPOJOList.get(0);
 
@@ -1693,19 +1673,11 @@ public class DecideMan {
                 List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
                 //判断网络中节点是否存在
                 //如果不存在，返回total = 1
-                if (nodePOJOList.size() == 0) {
-                    if (total >= 1){
-                        total = 1;
-                        result = 3;
-                    }
-                }
+                if (nodePOJOList.size() == 0) total3 = 1;
                 else {
                     nodePOJO = nodePOJOList.get(0);
                     Integer temp = getTotal(nodeBegin, nodePOJO);
-                    if (total >= temp) {
-                        total = temp;
-                        result = 3;
-                    }
+                    total3 = temp;
                 }
             }
         }
@@ -1717,12 +1689,7 @@ public class DecideMan {
             List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardBegin);
             //判断网路中是否有该棋盘记录
             //如果不存在返回total = 1
-            if (chessboardPOJOList.size() == 0) {
-                if (total >= 1){
-                    total = 1;
-                    result = 4;
-                }
-            }
+            if (chessboardPOJOList.size() == 0) total4 = 1;
             else {
                 chessboardBegin = chessboardPOJOList.get(0);
 
@@ -1736,19 +1703,11 @@ public class DecideMan {
                 List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
                 //判断网络中节点是否存在
                 //如果不存在，返回total = 1
-                if (nodePOJOList.size() == 0) {
-                    if (total >= 1) {
-                        total = 1;
-                        result = 4;
-                    }
-                }
+                if (nodePOJOList.size() == 0) total4 = 1;
                 else {
                     nodePOJO = nodePOJOList.get(0);
                     Integer temp = getTotal(nodeBegin, nodePOJO);
-                    if (total >= temp) {
-                        total = temp;
-                        result = 4;
-                    }
+                    total4 = temp;
                 }
             }
         }
@@ -1760,12 +1719,7 @@ public class DecideMan {
             List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardBegin);
             //判断网路中是否有该棋盘记录
             //如果不存在返回total = 1
-            if (chessboardPOJOList.size() == 0) {
-                if (total >= 1) {
-                    total = 1;
-                    result = 5;
-                }
-            }
+            if (chessboardPOJOList.size() == 0) total5 = 1;
             else {
                 chessboardBegin = chessboardPOJOList.get(0);
 
@@ -1779,19 +1733,11 @@ public class DecideMan {
                 List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
                 //判断网络中节点是否存在
                 //如果不存在，返回total = 1
-                if (nodePOJOList.size() == 0) {
-                    if (total >= 1){
-                        total = 1;
-                        result = 5;
-                    }
-                }
+                if (nodePOJOList.size() == 0) total5 = 1;
                 else {
                     nodePOJO = nodePOJOList.get(0);
                     Integer temp = getTotal(nodeBegin, nodePOJO);
-                    if (total >= temp) {
-                        total = temp;
-                        result = 5;
-                    }
+                    total5 = temp;
                 }
             }
         }
@@ -1803,12 +1749,7 @@ public class DecideMan {
             List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardBegin);
             //判断网路中是否有该棋盘记录
             //如果不存在返回total = 1
-            if (chessboardPOJOList.size() == 0) {
-                if (total >= 1) {
-                    total = 1;
-                    result = 6;
-                }
-            }
+            if (chessboardPOJOList.size() == 0) total6 = 1;
             else {
                 chessboardBegin = chessboardPOJOList.get(0);
 
@@ -1822,19 +1763,11 @@ public class DecideMan {
                 List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
                 //判断网络中节点是否存在
                 //如果不存在，返回total = 1
-                if (nodePOJOList.size() == 0) {
-                    if (total >= 1) {
-                        total = 1;
-                        result = 6;
-                    }
-                }
+                if (nodePOJOList.size() == 0) total6 = 1;
                 else {
                     nodePOJO = nodePOJOList.get(0);
                     Integer temp = getTotal(nodeBegin, nodePOJO);
-                    if (total >= temp) {
-                        total = temp;
-                        result = 6;
-                    }
+                    total6 = temp;
                 }
             }
         }
@@ -1846,12 +1779,7 @@ public class DecideMan {
             List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardBegin);
             //判断网路中是否有该棋盘记录
             //如果不存在返回total = 1
-            if (chessboardPOJOList.size() == 0) {
-                if (total >= 1) {
-                    total = 1;
-                    result = 7;
-                }
-            }
+            if (chessboardPOJOList.size() == 0) total7 = 1;
             else {
                 chessboardBegin = chessboardPOJOList.get(0);
 
@@ -1865,19 +1793,11 @@ public class DecideMan {
                 List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
                 //判断网络中节点是否存在
                 //如果不存在，返回total = 1
-                if (nodePOJOList.size() == 0) {
-                    if (total >= 1){
-                        total = 1;
-                        result = 7;
-                    }
-                }
+                if (nodePOJOList.size() == 0) total7 = 1;
                 else {
                     nodePOJO = nodePOJOList.get(0);
                     Integer temp = getTotal(nodeBegin, nodePOJO);
-                    if (total >= temp) {
-                        total = temp;
-                        result = 7;
-                    }
+                    total7 = temp;
                 }
             }
         }
@@ -1889,9 +1809,7 @@ public class DecideMan {
             List<ChessboardPOJO> chessboardPOJOList = sqlSession.selectList("team.chess.Mapper.ChessboardMapper.queryList", chessboardBegin);
             //判断网路中是否有该棋盘记录
             //如果不存在返回total = 1
-            if (chessboardPOJOList.size() == 0) {
-                if (total >= 1) result = 8;
-            }
+            if (chessboardPOJOList.size() == 0) total8 = 1;
             else {
                 chessboardBegin = chessboardPOJOList.get(0);
 
@@ -1905,18 +1823,24 @@ public class DecideMan {
                 List<NodePOJO> nodePOJOList = sqlSession.selectList("team.chess.Mapper.NodeMapper.queryList", nodePOJO);
                 //判断网络中节点是否存在
                 //如果不存在，返回total = 1
-                if (nodePOJOList.size() == 0) {
-                    if (total >= 1) result = 8;
-                }
+                if (nodePOJOList.size() == 0) total8 = 1;
                 else {
                     nodePOJO = nodePOJOList.get(0);
                     Integer temp = getTotal(nodeBegin, nodePOJO);
-                    if (total >= temp) {
-                        result = 8;
-                    }
+                    total8 = temp;
                 }
             }
         }
+        if (total1 != 0) totalResult.add(1);
+        if (total2 != 0) totalResult.add(2);
+        if (total3 != 0) totalResult.add(3);
+        if (total4 != 0) totalResult.add(4);
+        if (total5 != 0) totalResult.add(5);
+        if (total6 != 0) totalResult.add(6);
+        if (total7 != 0) totalResult.add(7);
+        if (total8 != 0) totalResult.add(8);
+        int index = 1 + (int)(Math.random() * totalResult.size());
+        result = totalResult.get(index-1);
         sqlSession.commit();
         sqlSession.close();
         return result;
