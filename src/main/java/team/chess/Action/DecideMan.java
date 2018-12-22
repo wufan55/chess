@@ -1236,7 +1236,7 @@ public class DecideMan {
         }
         x2 = x + temp + 1;
         y2 = y - temp - 1;
-        if (x1 >= 1 && y1 <= 15 && x2 <= 15 && y2 >= 0){
+        if (x1 >= 1 && y1 <= 15 && x2 <= 15 && y2 >= 1){
             if (lines.get(x1-1).charAt(y1-1) == '0' && lines.get(x2-1).charAt(y2-1) == '0') {
                 if (num == 3) {
                     //修改chessboard，查chessboard/
