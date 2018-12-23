@@ -1565,9 +1565,7 @@ public class DecideMan {
         return filledLevel;
     }
 
-    //循环次数分析
-    //result不随机
-    //增加随机
+    //循环次数分析,随机决策
     public Integer totalTime(NodePOJO nodeBegin) throws IOException {
         SqlSessionFactory sqlSessionFactory = sqlUtil.getSqlSessionFactory();
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -1579,7 +1577,6 @@ public class DecideMan {
         Integer y = nodeBegin.getY();
         Integer value = nodeBegin.getValue();
         Integer val = (value == 1) ? 2 : 1;
-        Integer total = 1;
         Integer result = 0;
         Integer total1 = 0;
         Integer total2 = 0;
@@ -1801,7 +1798,7 @@ public class DecideMan {
                 }
             }
         }
-        if (x <= 14 && y <= 14 && lines.get(x).charAt(x) == '0') {
+        if (x <= 14 && y <= 14 && lines.get(x).charAt(y) == '0') {
             StringBuilder stringBuilder = new StringBuilder(lines.get(x));
             stringBuilder.setCharAt(y, Character.forDigit(val, 10));
             lines.set(x, stringBuilder.toString());
@@ -1831,6 +1828,7 @@ public class DecideMan {
                 }
             }
         }
+
         if (total1 != 0) totalResult.add(1);
         if (total2 != 0) totalResult.add(2);
         if (total3 != 0) totalResult.add(3);
@@ -1847,7 +1845,6 @@ public class DecideMan {
     }
 
     //辅助函数
-    //默认nodeBegin和nodeEnd存在即数据库包装好的数据
     private Integer getTotal(NodePOJO nodeBegin, NodePOJO nodeEnd) throws IOException {
         SqlSessionFactory sqlSessionFactory = sqlUtil.getSqlSessionFactory();
         SqlSession sqlSession = sqlSessionFactory.openSession();
