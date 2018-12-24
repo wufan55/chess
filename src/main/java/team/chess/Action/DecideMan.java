@@ -40,6 +40,7 @@ public class DecideMan {
                 NodePOJO nodeEnd = new NodePOJO();
 
                 Integer totalTimeChoice = totalTime(nodeBegin);
+                if (totalTimeChoice == 0) return nodeEnd;
                 Integer x = nodeBegin.getX();
                 Integer y = nodeBegin.getY();
                 Integer value = nodeBegin.getValue();
@@ -1837,8 +1838,10 @@ public class DecideMan {
         if (total6 != 0) totalResult.add(6);
         if (total7 != 0) totalResult.add(7);
         if (total8 != 0) totalResult.add(8);
-        int index = 1 + (int)(Math.random() * totalResult.size());
-        result = totalResult.get(index-1);
+        if (totalResult.size() != 0) {
+            int index = (int)(Math.random() * totalResult.size());
+            result = totalResult.get(index);
+        }
         sqlSession.commit();
         sqlSession.close();
         return result;

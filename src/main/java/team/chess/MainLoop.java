@@ -2,6 +2,9 @@ package team.chess;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import team.IRobot.IRobot;
+import team.IRobot.Pair;
+import team.IRobot.StupidRobot;
 import team.chess.Action.DecideMan;
 import team.chess.Action.JudgeMan;
 import team.chess.Action.RecordMan;
@@ -23,15 +26,14 @@ public class MainLoop {
         SqlUtil sqlUtil = new SqlUtil();
         SqlSessionFactory sqlSessionFactory = sqlUtil.getSqlSessionFactory();
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        Scanner scanner = new Scanner(System.in);
 
         NodePOJO rootNodePOJO = sqlSession.selectOne("team.chess.Mapper.NodeMapper.queryObject", 0);
-        System.out.println("computerX: " + rootNodePOJO.getX());
-        System.out.println("computerY: " + rootNodePOJO.getY());
+        //System.out.println("computerX: " + rootNodePOJO.getX());
+        //System.out.println("computerY: " + rootNodePOJO.getY());
         String comVal = "black";
         String humVal = "white";
 
-        System.out.println("computerValue: " + comVal);
+        //System.out.println("computerValue: " + comVal);
         sqlSession.commit();
         sqlSession.close();
         boolean result;
@@ -44,16 +46,22 @@ public class MainLoop {
             RecordMan recordMan = new RecordMan();
             JudgeMan judgeMan = new JudgeMan();
             NodePOJO endNode = new NodePOJO();
+            IRobot iRobot = new StupidRobot();
             while (true) {
                 SqlSession sqlSession1 = sqlSessionFactory.openSession();
 
-                System.out.println("Input Human X: ");
-                Integer huX = scanner.nextInt();
-                System.out.println("Input Human Y: ");
-                Integer huY = scanner.nextInt();
-
                 ChessboardPOJO chessboardPOJO = sqlSession1.selectOne("team.chess.Mapper.ChessboardMapper.queryObject", beginNode.getChessboardId());
                 List<String> lines = chessboardPOJO.getLines();
+                //
+                int[][] chessboard = Transfer(chessboardPOJO.getLines());
+                iRobot.retrieveGameBoard(chessboard);
+                Pair pair = iRobot.getDeterminedPos();
+                Integer huX = pair.x;
+                //System.out.println("Input Human X: " + huX);
+                Integer huY = pair.y;
+                //System.out.println("Input Human Y: " + huY);
+
+
                 StringBuilder stringBuilder = new StringBuilder(lines.get(huX-1));
                 stringBuilder.setCharAt(huY-1, Character.forDigit(2, 10));
                 lines.set(huX-1, stringBuilder.toString());
@@ -89,9 +97,9 @@ public class MainLoop {
                     System.out.println(humVal + " " + "win");
                     break;
                 }
-                System.out.println("computerX: " + endNode.getX());
-                System.out.println("computerY: " + endNode.getY());
-                System.out.println("computerValue: " + comVal);
+                //System.out.println("computerX: " + endNode.getX());
+                //System.out.println("computerY: " + endNode.getY());
+                //System.out.println("computerValue: " + comVal);
 
                 recordMan.Record(beginNode, endNode);
                 result = judgeMan.Judge(endNode);
@@ -108,7 +116,6 @@ public class MainLoop {
             }
             i++;
         }
-        scanner.close();
         return;
     }
 
@@ -202,6 +209,7 @@ public class MainLoop {
         return;
     }
 
+    //自己下
     public static void OnesOwn() throws IOException {
         SqlUtil sqlUtil = new SqlUtil();
         SqlSessionFactory sqlSessionFactory = sqlUtil.getSqlSessionFactory();
@@ -283,7 +291,19 @@ public class MainLoop {
         return;
     }
 
+    //List<String> 转 int[][]
+    private static int[][] Transfer(List<String> lines) {
+        int[][] chessboard = new int[16][16];
+        for (int i=1; i < 16; i++) {
+            for (int k=1; k < 16; k++) {
+                chessboard[i][k] = Integer.parseInt(String.valueOf(lines.get(i-1).charAt(k-1)));
+            }
+        }
+        return chessboard;
+    }
+
     public static void main(String[] args) throws IOException {
-        OnesOwn();
+        for (int i = 0; i < 8; i++)
+            FirstHand();
     }
 }
