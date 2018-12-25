@@ -35,7 +35,12 @@ public class JudgeMan {
         int temp = 0;
         //水平方向判断
         String currLine = lines.get(x-1);
-        while ((y-temp-2 >= 0 && currLine.charAt(y-temp-2) == value) || (y+temp <= 14 && currLine.charAt(y+temp) == value)){
+        while (y-temp-2 >= 0 && currLine.charAt(y-temp-2) == value){
+            num++;
+            temp++;
+        }
+        temp = 0;
+        while (y+temp <= 14 && currLine.charAt(y+temp) == value){
             num++;
             temp++;
         }
@@ -44,7 +49,12 @@ public class JudgeMan {
 
         //垂直方向判断
         temp = 0;
-        while ((x-temp-2 >= 0 && lines.get(x-temp-2).charAt(y-1) == value) || (x+temp <= 14 && lines.get(x+temp).charAt(y-1) == value)){
+        while (x-temp-2 >= 0 && lines.get(x-temp-2).charAt(y-1) == value){
+            num++;
+            temp++;
+        }
+        temp = 0;
+        while (x+temp <= 14 && lines.get(x+temp).charAt(y-1) == value){
             num++;
             temp++;
         }
@@ -53,8 +63,12 @@ public class JudgeMan {
 
         //左斜方向判断
         temp = 0;
-        while ((x-temp-2 >= 0 && y-temp-2 >= 0 && lines.get(x-temp-2).charAt(y-temp-2) == value) ||
-                (x+temp <= 14 && y+temp <= 14 && lines.get(x+temp).charAt(y+temp) == value)){
+        while (x-temp-2 >= 0 && y-temp-2 >= 0 && lines.get(x-temp-2).charAt(y-temp-2) == value){
+            num++;
+            temp++;
+        }
+        temp = 0;
+        while (x+temp <= 14 && y+temp <= 14 && lines.get(x+temp).charAt(y+temp) == value){
             num++;
             temp++;
         }
@@ -63,8 +77,12 @@ public class JudgeMan {
 
         //右斜方向判断
         temp = 0;
-        while ((x+temp <= 14 && y-temp-2 >= 0 && lines.get(x+temp).charAt(y-temp-2) == value) ||
-                (x-temp-2 >= 0 && y+temp <= 14 && lines.get(x-temp-2).charAt(y+temp) == value)){
+        while (x+temp <= 14 && y-temp-2 >= 0 && lines.get(x+temp).charAt(y-temp-2) == value){
+            num++;
+            temp++;
+        }
+        temp = 0;
+        while (x-temp-2 >= 0 && y+temp <= 14 && lines.get(x-temp-2).charAt(y+temp) == value){
             num++;
             temp++;
         }
