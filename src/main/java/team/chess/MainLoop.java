@@ -294,16 +294,16 @@ public class MainLoop {
     //List<String> 转 int[][]
     private static int[][] Transfer(List<String> lines) {
         int[][] chessboard = new int[16][16];
-        for (int i=1; i < 16; i++) {
-            for (int k=1; k < 16; k++) {
-                chessboard[i][k] = Integer.parseInt(String.valueOf(lines.get(i-1).charAt(k-1)));
+        for (int i=0; i < 15; i++) {
+            for (int k=0; k < 15; k++) {
+                chessboard[i][k] = Integer.parseInt(String.valueOf(lines.get(i).charAt(k)));
             }
         }
         return chessboard;
     }
 
     public static void main(String[] args) throws IOException {
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 10; i++)
             FirstHand();
     }
 }
