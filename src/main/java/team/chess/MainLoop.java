@@ -56,9 +56,9 @@ public class MainLoop {
                 int[][] chessboard = Transfer(chessboardPOJO.getLines());
                 iRobot.retrieveGameBoard(chessboard);
                 Pair pair = iRobot.getDeterminedPos();
-                Integer huX = pair.x;
+                Integer huX = pair.x + 1;
                 //System.out.println("Input Human X: " + huX);
-                Integer huY = pair.y;
+                Integer huY = pair.y + 1;
                 //System.out.println("Input Human Y: " + huY);
 
 
@@ -303,7 +303,7 @@ public class MainLoop {
     }
 
     public static void main(String[] args) throws IOException {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 1; i++)
             FirstHand();
     }
 }
