@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2b6c34d6-f514-4b01-a345-0c8509c6e80f" name="Default Changelist" comment="7">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/chess/mysql.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/chess/resource/mysql.properties" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/team/chess/MainLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/team/chess/MainLoop.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -19,8 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/MainLoop.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="299" column="13" lean-forward="true" selection-start-line="299" selection-start-column="13" selection-end-line="299" selection-end-column="13" />
+            <state relative-caret-position="368">
+              <caret line="295" column="45" lean-forward="true" selection-start-line="295" selection-start-column="45" selection-end-line="295" selection-end-column="45" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#SecondHand#0;class#MainLoop#0" />
@@ -109,8 +106,8 @@
         <option value="$PROJECT_DIR$/src/main/java/team/IRobot/StupidRobot.java" />
         <option value="$PROJECT_DIR$/src/main/java/team/chess/Action/JudgeMan.java" />
         <option value="$PROJECT_DIR$/src/resource/mysql.properties" />
-        <option value="$PROJECT_DIR$/src/main/java/team/chess/MainLoop.java" />
         <option value="$PROJECT_DIR$/src/resource/mybatis-config.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/team/chess/MainLoop.java" />
       </list>
     </option>
   </component>
@@ -225,7 +222,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1545742634317" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1545749799814" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -325,18 +322,17 @@
       <workItem from="1545650799888" duration="4313000" />
       <workItem from="1545701624956" duration="3253000" />
       <workItem from="1545727090243" duration="3054000" />
-      <workItem from="1545741978360" duration="652000" />
+      <workItem from="1545741978360" duration="1661000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="114787000" />
+    <option name="totallyTimeSpent" value="115796000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="807" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2725322" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2725322" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -345,7 +341,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32867134" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.33146852" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.33146852" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -615,8 +611,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/team/chess/MainLoop.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="299" column="13" lean-forward="true" selection-start-line="299" selection-start-column="13" selection-end-line="299" selection-end-column="13" />
+        <state relative-caret-position="368">
+          <caret line="295" column="45" lean-forward="true" selection-start-line="295" selection-start-column="45" selection-end-line="295" selection-end-column="45" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#SecondHand#0;class#MainLoop#0" />
