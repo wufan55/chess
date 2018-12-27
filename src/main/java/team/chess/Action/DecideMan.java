@@ -1502,8 +1502,8 @@ public class DecideMan {
             Integer total = stepPOJO.getTotal();
             if (nodeBeginValue == 1) {
                 Integer whiteWin = stepPOJO.getWhiteWin();
-                Float currWinPoint = Float.valueOf(whiteWin / total);
-                Float winPoint = Float.valueOf(stepDecide.getWhiteWin() / stepDecide.getTotal());
+                Float currWinPoint = (float) whiteWin / total;
+                Float winPoint = (float) stepDecide.getWhiteWin() / stepDecide.getTotal();
                 if (currWinPoint > winPoint) {
                     stepDecide = stepPOJO;
                     relationDecide = relationPOJO;
@@ -1511,8 +1511,8 @@ public class DecideMan {
             }
             if (nodeBeginValue == 2) {
                 Integer blackWin = stepPOJO.getBlackWin();
-                Float currWinPoint = Float.valueOf(blackWin / total);
-                Float winPoint = Float.valueOf(stepDecide.getBlackWin() / stepDecide.getTotal());
+                Float currWinPoint = (float) blackWin / total;
+                Float winPoint = (float) stepDecide.getBlackWin() / stepDecide.getTotal();
                 if (currWinPoint > winPoint) {
                     stepDecide = stepPOJO;
                     relationDecide = relationPOJO;
