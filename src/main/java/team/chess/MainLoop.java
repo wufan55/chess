@@ -97,6 +97,19 @@ public class MainLoop {
                     System.out.println(humVal + " " + "win");
                     break;
                 }
+                NodePOJO temp;
+                while (endNode.getValue() == null) {
+                    List<StepPOJO> stepPOJOList = recordMan.getStepPOJOS();
+                    Integer stepListSize = stepPOJOList.size();
+                    StepPOJO stepPOJO = stepPOJOList.get(stepListSize-2);
+                    Map param = new HashMap();
+                    param.put("stepId", stepPOJO.getId());
+                    List<RelationPOJO> relationPOJOS = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
+                    RelationPOJO relationPOJO = relationPOJOS.get(0);
+                    Integer beginId = relationPOJO.getNodeBeginId();
+                    temp = sqlSession.selectOne("team.chess.Mapper.NodeMapper.queryObject", beginId);
+                    endNode = decideMan.Decide(temp);
+                }
                 //System.out.println("computerX: " + endNode.getX());
                 //System.out.println("computerY: " + endNode.getY());
                 //System.out.println("computerValue: " + comVal);
@@ -149,9 +162,22 @@ public class MainLoop {
                     System.out.println(humVal + " " + "win");
                     break;
                 }
-                //System.out.println("computerX: " + endNode.getX());
-                //System.out.println("computerY: " + endNode.getY());
-                //System.out.println("computerValue: " + comVal);
+                NodePOJO temp;
+                while (endNode.getValue() == null) {
+                    List<StepPOJO> stepPOJOList = recordMan.getStepPOJOS();
+                    Integer stepListSize = stepPOJOList.size();
+                    StepPOJO stepPOJO = stepPOJOList.get(stepListSize-2);
+                    Map param = new HashMap();
+                    param.put("stepId", stepPOJO.getId());
+                    List<RelationPOJO> relationPOJOS = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
+                    RelationPOJO relationPOJO = relationPOJOS.get(0);
+                    Integer beginId = relationPOJO.getNodeBeginId();
+                    temp = sqlSession.selectOne("team.chess.Mapper.NodeMapper.queryObject", beginId);
+                    endNode = decideMan.Decide(temp);
+                }
+                System.out.println("computerX: " + endNode.getX());
+                System.out.println("computerY: " + endNode.getY());
+                System.out.println("computerValue: " + comVal);
                 //记录begin to end
                 recordMan.Record(beginNode, endNode);
                 result = judgeMan.Judge(endNode);
@@ -170,10 +196,10 @@ public class MainLoop {
                 iRobot.retrieveGameBoard(chessboard);
                 Pair pair = iRobot.getDeterminedPos();
                 Integer huX = pair.x + 1;
-                //System.out.println("Input Human X: " + huX);
+                System.out.println("Input Human X: " + huX);
                 Integer huY = pair.y + 1;
                 //System.out.println("Input Human X: ");
-                //System.out.println("Input Human Y: ");
+                System.out.println("Input Human Y: " + huY);
                 StringBuilder stringBuilder = new StringBuilder(lines.get(huX-1));
                 stringBuilder.setCharAt(huY-1, Character.forDigit(1, 10));
                 lines.set(huX-1, stringBuilder.toString());
