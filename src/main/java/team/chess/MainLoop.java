@@ -104,7 +104,7 @@ public class MainLoop {
                     StepPOJO stepPOJO = stepPOJOList.get(stepListSize-2);
                     Map param = new HashMap();
                     param.put("stepId", stepPOJO.getId());
-                    List<RelationPOJO> relationPOJOS = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
+                    List<RelationPOJO> relationPOJOS = sqlSession1.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
                     RelationPOJO relationPOJO = relationPOJOS.get(0);
                     Integer beginId = relationPOJO.getNodeBeginId();
                     temp = sqlSession.selectOne("team.chess.Mapper.NodeMapper.queryObject", beginId);
@@ -156,6 +156,7 @@ public class MainLoop {
             JudgeMan judgeMan = new JudgeMan();
             IRobot iRobot = new StupidRobot();
             while (true) {
+                SqlSession sqlSession1 = sqlSessionFactory.openSession();
                 NodePOJO endNode = decideMan.Decide(beginNode);
                 if (endNode == null){
                     recordMan.UpdateRecord(1);
@@ -169,7 +170,7 @@ public class MainLoop {
                     StepPOJO stepPOJO = stepPOJOList.get(stepListSize-2);
                     Map param = new HashMap();
                     param.put("stepId", stepPOJO.getId());
-                    List<RelationPOJO> relationPOJOS = sqlSession.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
+                    List<RelationPOJO> relationPOJOS = sqlSession1.selectList("team.chess.Mapper.RelationMapper.queryListByMap", param);
                     RelationPOJO relationPOJO = relationPOJOS.get(0);
                     Integer beginId = relationPOJO.getNodeBeginId();
                     temp = sqlSession.selectOne("team.chess.Mapper.NodeMapper.queryObject", beginId);
@@ -189,7 +190,6 @@ public class MainLoop {
                 }
                 beginNode = endNode;
 
-                SqlSession sqlSession1 = sqlSessionFactory.openSession();
                 ChessboardPOJO chessboardPOJO = sqlSession1.selectOne("team.chess.Mapper.ChessboardMapper.queryObject", endNode.getChessboardId());
                 List<String> lines = chessboardPOJO.getLines();
                 int[][] chessboard = Transfer(chessboardPOJO.getLines());
@@ -333,7 +333,11 @@ public class MainLoop {
     }
 
     public static void main(String[] args) throws IOException {
-        for (int i = 0; i < 1; i++)
-            SecondHand();
+        for (int i = 0; i < 10; i++){
+            for (int k = 0; k < 100; k++)
+                FirstHand();
+            for (int x = 0; x < 100; x++)
+                SecondHand();
+        }
     }
 }
