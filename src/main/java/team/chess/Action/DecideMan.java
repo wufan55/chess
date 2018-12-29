@@ -30,7 +30,7 @@ public class DecideMan {
         else {
             Float filledLevel = filledLevel(nodeBegin);
             //饱和度大于0.5进行权重决策
-            if (filledLevel > 1/2) {
+            if (filledLevel < 1/2) {
                 sqlSession.commit();
                 sqlSession.close();
                 return weightDecide(nodeBegin);
@@ -1558,8 +1558,8 @@ public class DecideMan {
 
         //饱和度
         Float filledLevel;
-        if (total == 0) filledLevel = Float.valueOf(0);
-        else  filledLevel = Float.valueOf(known / total);
+        if (total == 0) filledLevel = (float) 0;
+        else  filledLevel = (float) known / total;
 
         sqlSession.commit();
         sqlSession.close();
